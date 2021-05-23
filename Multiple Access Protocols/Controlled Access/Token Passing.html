@@ -1,0 +1,1794 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Token Passing Protocol</title>
+  <style type="text/css">
+    .column {
+    float: left;
+    width: 16%;
+    padding: 2px;
+  }
+
+  .row::after {
+      content: "";
+      clear: both;
+      display: inline-block;
+  }
+
+  #animate1 {
+    width: 50px;
+    height: 10px;
+    position: absolute;
+    background-color: blue;
+    padding: 5px;
+  }
+
+  </style>
+
+  <script type="text/javascript">
+    var delay = 500, bndw = 20, btnCnt=0;
+    function drawLine(startx, starty, endx, endy, color)
+    {
+      var doc_id = document.getElementById("verticle"); 
+          var context = doc_id.getContext("2d"); 
+          context.beginPath(); 
+          context.moveTo(startx, starty);
+            context.lineWidth = 5;
+            //context.setLineDash([5, 0]);
+          context.strokeStyle = color; 
+          context.lineTo(endx,endy); 
+          context.stroke();
+    }
+    function drawThickLine(startx, starty, endx, endy, color)
+    {
+      var doc_id = document.getElementById("verticle"); 
+          var context = doc_id.getContext("2d"); 
+          context.beginPath(); 
+          context.moveTo(startx, starty);
+            context.lineWidth = 8;
+            //context.setLineDash([5, 0]);
+          context.strokeStyle = color; 
+          context.lineTo(endx,endy); 
+          context.stroke();
+    }
+    function drawThinLine(startx, starty, endx, endy, color)
+    {
+      var doc_id = document.getElementById("verticle"); 
+          var context = doc_id.getContext("2d"); 
+          context.beginPath(); 
+          context.moveTo(startx, starty);
+            context.lineWidth = 3;
+            context.setLineDash([5, 0]);
+          context.strokeStyle = color; 
+          context.lineTo(endx,endy); 
+          context.stroke();
+    }
+    function drawDashLine(startx, starty, endx, endy, color)
+    {
+      var doc_id = document.getElementById("verticle"); 
+          var context = doc_id.getContext("2d"); 
+          context.beginPath(); 
+          context.moveTo(startx, starty);
+            context.lineWidth = 2;
+            context.setLineDash([5, 5]);
+          context.strokeStyle = color; 
+          context.lineTo(endx,endy); 
+          context.stroke();
+    }
+    function drawLine4Star(color)
+    {
+      //1
+      drawLine(250,100,400,100,color);
+        drawLine(400,100,400,225,color);
+        drawLine(200,150,200,250,color);
+        drawLine(200,250,400,250,color);
+
+        //2
+        drawLine(500,100,650,100,color);
+        drawLine(500,100,500,225,color);
+        drawLine(700,150,700,250,color);
+        drawLine(700,250,500,250,color);
+
+        //4
+        drawLine(250,450,400,450,color);
+        drawLine(400,450,400,325,color);
+        drawLine(200,400,200,300,color);
+        drawLine(200,300,400,300,color);
+
+        //3
+        drawLine(500,450,650,450,color);
+        drawLine(500,450,500,325,color);
+        drawLine(700,400,700,300,color);
+        drawLine(700,300,500,300,color);
+    }
+
+    function onTOtwo(color)
+    {
+      drawLine(250,100,400,100,color);
+        drawLine(400,100,400,225,color);
+
+        drawLine(700,150,700,250,color);
+        drawLine(700,250,500,250,color);
+    }
+    function onTOthree(color)
+    {
+      //1
+      drawLine(250,100,400,100,color);
+        drawLine(400,100,400,225,color);
+
+        //3
+        drawLine(500,450,650,450,color);
+        drawLine(500,450,500,325,color);
+    }
+    function onTOfour(color)
+    {
+      //1
+      drawLine(250,100,400,100,color);
+        drawLine(400,100,400,225,color);
+
+        //4
+        drawLine(250,450,400,450,color);
+        drawLine(400,450,400,325,color);
+    }
+
+    function towTOthree(color)
+    {
+
+        drawLine(500,100,650,100,color);
+        drawLine(500,100,500,225,color);
+
+        drawLine(500,450,650,450,color);
+        drawLine(500,450,500,325,color);
+        //drawLine(700,400,700,300,color);
+        //drawLine(700,300,500,300,color);
+    }
+    function towTOone(color)
+    {
+      //1
+        drawLine(200,150,200,250,color);
+        drawLine(200,250,400,250,color);
+
+        //2
+        drawLine(500,100,650,100,color);
+        drawLine(500,100,500,225,color);
+    }
+    function towTOfour(color)
+    {
+        //2
+        drawLine(500,100,650,100,color);
+        drawLine(500,100,500,225,color);
+
+        //4
+        drawLine(250,450,400,450,color);
+        drawLine(400,450,400,325,color);
+    }
+
+
+    function threeTOfour(color)
+    {
+
+        drawLine(250,450,400,450,color);
+        drawLine(400,450,400,325,color);
+        //drawLine(200,400,200,300,color);
+        //drawLine(200,300,400,300,color);
+
+        //drawLine(500,450,650,450,color);
+        //drawLine(500,450,500,325,color);
+        drawLine(700,400,700,300,color);
+        drawLine(700,300,500,300,color);
+    }
+    function threeTOone(color)
+    {
+      //1
+        drawLine(200,150,200,250,color);
+        drawLine(200,250,400,250,color);
+
+        //3
+        drawLine(700,400,700,300,color);
+        drawLine(700,300,500,300,color);
+    }
+    function threeTOtwo(color)
+    {
+        //2
+        drawLine(700,150,700,250,color);
+        drawLine(700,250,500,250,color);
+
+        //3
+        drawLine(700,400,700,300,color);
+        drawLine(700,300,500,300,color);
+    }
+
+
+    function fourTOone(color)
+    {
+        //drawLine(250,100,400,100,color);
+        //drawLine(400,100,400,225,color);
+        drawLine(200,150,200,250,color);
+        drawLine(200,250,400,250,color);
+
+        //drawLine(250,450,400,450,color);
+        //drawLine(400,450,400,325,color);
+        drawLine(200,400,200,300,color);
+        drawLine(200,300,400,300,color);
+    }
+    function fourTOtwo(color)
+    {
+        //2
+        drawLine(700,150,700,250,color);
+        drawLine(700,250,500,250,color);
+
+        //4
+        drawLine(200,400,200,300,color);
+        drawLine(200,300,400,300,color);
+    }
+    function fourTOthree(color)
+    {
+        //4
+        drawLine(200,400,200,300,color);
+        drawLine(200,300,400,300,color);
+
+        //3
+        drawLine(500,450,650,450,color);
+        drawLine(500,450,500,325,color);
+    }
+
+    function drawColorText(x, y,txt,color)
+    {
+      var elm_id = document.getElementById("verticle"); 
+          var ctxx = elm_id.getContext("2d");
+      ctxx.moveTo(x, y); 
+            ctxx.fillStyle = color;
+            ctxx.font = "30px Georgia";
+            ctxx.fillText(txt,x,y);
+    }
+    function drawtokenBox(rectX,rectY,rectWidth,rectHeight)
+    {
+      var doc_id = document.getElementById("verticle"); 
+          var ctx = doc_id.getContext("2d"); 
+          ctx.beginPath(); 
+          ctx.moveTo(rectX, rectY); 
+          ctx.strokeStyle = "yellow";
+      ctx.rect(rectX,rectY,rectWidth,rectHeight);
+      ctx.stroke();
+            ctx.font = "15px Georgia";
+            ctx.fillText("TO+SA",parseInt(rectX-20 +(parseInt(rectWidth-7)/2)), parseInt(rectY+(parseInt(rectHeight+10)/2)));
+    }
+    function clearTokenBox(rectX,rectY,rectWidth,rectHeight)
+    {
+      var doc_id = document.getElementById("verticle"); 
+          var ctx = doc_id.getContext("2d"); 
+          ctx.beginPath(); 
+          ctx.moveTo(rectX, rectY); 
+      ctx.clearRect(rectX-3,rectY-3,rectWidth+7,rectHeight+7);
+    }
+
+    function secHoriz(startx, starty, endx, endy, text, dir)
+    {
+      var doc_id = document.getElementById("verticle"); 
+          var context = doc_id.getContext("2d"); 
+          context.beginPath(); 
+          context.moveTo(startx, starty); 
+          context.lineWidth = 5;
+          context.strokeStyle = 'darkgreen'; 
+          context.lineTo(endx,endy); 
+          context.stroke();
+
+    }
+
+    function resetBtnCnt()
+    {
+      btnCnt=0;
+      var r1 = document.getElementById("dataL1");
+      var r2 = document.getElementById("dataL2");
+      var r3 = document.getElementById("dataL3");
+      var r4 = document.getElementById("dataL4");
+
+      r1.disabled = true;
+      r2.disabled = false;
+      r3.disabled = false;
+      r4.disabled = false;
+      document.getElementById("startBtn").disabled=false;
+      location.reload();
+    }
+
+    function startProcess()
+    {
+      btnCnt++;
+      console.log(btnCnt);
+      if(btnCnt > 4)
+      {
+        alert("To Many Steps at a time!!");
+      }
+
+      var chk1 = document.getElementById("s1");
+      var chk2 = document.getElementById("s2");
+      var chk3 = document.getElementById("s3");
+      var chk4 = document.getElementById("s4");
+
+      var r1 = document.getElementById("dataL1");
+      var r2 = document.getElementById("dataL2");
+      var r3 = document.getElementById("dataL3");
+      var r4 = document.getElementById("dataL4");
+
+      delay=500;
+
+
+      if(chk1.checked == true)
+      {
+        var doc_id = document.getElementById("verticle"); 
+          var ctx = doc_id.getContext("2d");
+          ctx.clearRect(0,0,1000,550);
+          var img = document.getElementById("d1");
+          ctx.drawImage(img, 250, 100, 100, 100);
+          ctx.drawImage(img, 650, 100, 100, 100);
+          ctx.drawImage(img, 250, 350, 100, 100);
+          ctx.drawImage(img, 650, 350, 100, 100);
+
+          drawLine(350,150,650,150,"black");
+          drawLine(300,200,300,350,"black");
+          drawLine(350,400,650,400,"black");
+          drawLine(700,200,700,350,"black");
+
+          drawColorText(350,220,"1","red");
+          drawColorText(620,220,"2","green");
+          drawColorText(350,350,"4","blue");
+          drawColorText(620,350,"3","brown");
+          drawColorText(0,25,"Channel color change represents node can access it.","brown");
+          
+
+        if(btnCnt == 1)
+        {
+          myMoveX(179,50,60,30,180,180,"TOKEN");
+          r1.disabled = true;
+          r2.disabled = false;
+          r3.disabled = false;
+          r4.disabled = false;
+
+          var dlt = document.getElementById("dl").value;
+          var dl;
+          console.log(dlt.length);
+          if(dlt.length > 0)
+          {
+            dl = parseInt(document.getElementById("dl").value);
+          }
+          else
+          {
+            dl = 0; 
+          }
+
+          if((r2.checked == false && r3.checked == false && r4.checked == false) || dl ==0 )
+          {
+            setTimeout(function(){ myMoveX(180,50,60,30,770,770,"TOKEN"); },delay);
+          }
+          if(r2.checked == true && dl>0)
+          {
+            setTimeout(function(){ 
+          drawLine(350,150,650,150,"red");
+          drawLine(300,200,300,350,"black");
+          drawLine(350,400,650,400,"black");
+          drawLine(700,200,700,350,"black");},delay);
+          delay+= parseInt(dl/bndw)*1000;
+
+          }
+          if(r3.checked == true && dl>0)
+          {
+            setTimeout(function(){ 
+          drawLine(350,150,650,150,"red");
+          drawLine(300,200,300,350,"black");
+          drawLine(350,400,650,400,"black");
+          drawLine(700,200,700,350,"red");},delay);
+          delay+= parseInt(dl/bndw)*1000;
+            
+          }
+
+          if(r4.checked == true && dl>0)
+          {
+            setTimeout(function(){ 
+          drawLine(350,150,650,150,"black");
+          drawLine(300,200,300,350,"red");
+          drawLine(350,400,650,400,"black");
+          drawLine(700,200,700,350,"black");},delay);
+          delay+= parseInt(dl/bndw)*1000;
+          }
+
+
+        setTimeout(function(){ 
+          drawLine(350,150,650,150,"black");
+          drawLine(300,200,300,350,"black");
+          drawLine(350,400,650,400,"black");
+          drawLine(700,200,700,350,"black");
+          myMoveX(180,50,60,30,770,770,"TOKEN"); },delay);
+          delay+=6500;
+
+            setTimeout(function(){ 
+        document.getElementById("dl").value=" ";
+      document.getElementById("dl").focus();
+
+          r1.disabled = false;
+          r2.disabled = true;
+          r3.disabled = false;
+          r4.disabled = false;},delay);
+
+          //delay+= 500;
+        
+        }
+        else if(btnCnt == 2)
+        { 
+          myMoveY(760,49,60,30,50,50,"TOKEN");
+          delay =500;
+
+          var dlt = document.getElementById("dl").value;
+          var dl;
+          console.log(dlt.length);
+          if(dlt.length > 0)
+          {
+            dl = parseInt(document.getElementById("dl").value);
+          }
+          else
+          {
+            dl = 0; 
+          }
+
+          if((r1.checked == false && r3.checked == false && r4.checked == false) || dl == 0)
+          {
+            setTimeout(function(){ myMoveRevX(180,470,60,30,770,770,"TOKEN"); },delay);
+          }
+          if(r1.checked == true && dl>0)
+          {
+            setTimeout(function(){ 
+          drawLine(350,150,650,150,"green");
+          drawLine(300,200,300,350,"black");
+          drawLine(350,400,650,400,"black");
+          drawLine(700,200,700,350,"black");},delay);
+          delay+= parseInt(dl/bndw)*1000;
+
+          }
+          if(r3.checked == true && dl>0)
+          {
+            setTimeout(function(){ 
+          drawLine(350,150,650,150,"black");
+          drawLine(300,200,300,350,"black");
+          drawLine(350,400,650,400,"black");
+          drawLine(700,200,700,350,"green");},delay);
+          delay+= parseInt(dl/bndw)*1000;
+            
+          }
+
+          if(r4.checked == true && dl>0)
+          {
+            setTimeout(function(){ 
+          drawLine(350,150,650,150,"black");
+          drawLine(300,200,300,350,"black");
+          drawLine(350,400,650,400,"green");
+          drawLine(700,200,700,350,"green");},delay);
+          delay+= parseInt(dl/bndw)*1000;
+          }
+
+
+        setTimeout(function(){ 
+          drawLine(350,150,650,150,"black");
+          drawLine(300,200,300,350,"black");
+          drawLine(350,400,650,400,"black");
+          drawLine(700,200,700,350,"black");
+          myMoveY(760,50,60,30,460,460,"TOKEN"); },delay);
+          delay+=4800;
+
+            setTimeout(function(){ 
+        document.getElementById("dl").value=" ";
+      document.getElementById("dl").focus();
+
+          r1.disabled = false;
+          r2.disabled = false;
+          r3.disabled = true;
+          r4.disabled = false;},delay);
+
+        }
+        else if(btnCnt == 3)
+        {
+
+          myMoveRevX(769,470,60,30,770,770,"TOKEN");
+          delay =500;
+          var dlt = document.getElementById("dl").value;
+          var dl;
+          console.log(dlt.length);
+          if(dlt.length > 0)
+          {
+            dl = parseInt(document.getElementById("dl").value);
+          }
+          else
+          {
+            dl = 0; 
+          }
+
+          if((r1.checked == false && r2.checked == false && r4.checked == false) || dl == 0)
+          {
+            setTimeout(function(){ myMoveRevX(180,470,60,30,770,770,"TOKEN"); },delay);
+          }
+          if(r1.checked == true && dl>0)
+          {
+            setTimeout(function(){ 
+          drawLine(350,150,650,150,"brown");
+          drawLine(300,200,300,350,"black");
+          drawLine(350,400,650,400,"black");
+          drawLine(700,200,700,350,"brown");},delay);
+          delay+= parseInt(dl/bndw)*1000;
+
+          }
+          if(r2.checked == true && dl>0)
+          {
+            setTimeout(function(){ 
+          drawLine(350,150,650,150,"black");
+          drawLine(300,200,300,350,"black");
+          drawLine(350,400,650,400,"black");
+          drawLine(700,200,700,350,"brown");},delay);
+          delay+= parseInt(dl/bndw)*1000;
+            
+          }
+
+          if(r4.checked == true && dl>0)
+          {
+            setTimeout(function(){ 
+          drawLine(350,150,650,150,"black");
+          drawLine(300,200,300,350,"black");
+          drawLine(350,400,650,400,"brown");
+          drawLine(700,200,700,350,"black");},delay);
+          delay+= parseInt(dl/bndw)*1000;
+          }
+
+
+        setTimeout(function(){ 
+          drawLine(350,150,650,150,"black");
+          drawLine(300,200,300,350,"black");
+          drawLine(350,400,650,400,"black");
+          drawLine(700,200,700,350,"black");
+          myMoveRevX(180,470,60,30,770,770,"TOKEN"); },delay);
+          delay+=6500;
+
+            setTimeout(function(){ 
+        document.getElementById("dl").value=" ";
+      document.getElementById("dl").focus();
+
+          r1.disabled = false;
+          r2.disabled = false;
+          r3.disabled = false;
+          r4.disabled = true;},delay);
+        }
+        else if(btnCnt == 4)
+        {
+
+
+          myMoveRevY(180,459,60,30,460,460,"TOKEN");
+          delay =500;
+          var dlt = document.getElementById("dl").value;
+          var dl;
+          console.log(dlt.length);
+          if(dlt.length > 0)
+          {
+            dl = parseInt(document.getElementById("dl").value);
+          }
+          else
+          {
+            dl = 0; 
+          }
+
+          if((r1.checked == false && r2.checked == false && r3.checked == false) || dl == 0)
+          {
+            setTimeout(function(){ myMoveRevY(180,40,60,30,460,460,"TOKEN"); },delay);
+          }
+          if(r1.checked == true && dl>0)
+          {
+            setTimeout(function(){ 
+          drawLine(350,150,650,150,"black");
+          drawLine(300,200,300,350,"blue");
+          drawLine(350,400,650,400,"black");
+          drawLine(700,200,700,350,"black");},delay);
+          delay+= parseInt(dl/bndw)*1000;
+
+          }
+          if(r2.checked == true && dl>0)
+          {
+            setTimeout(function(){ 
+          drawLine(350,150,650,150,"black");
+          drawLine(300,200,300,350,"black");
+          drawLine(350,400,650,400,"blue");
+          drawLine(700,200,700,350,"blue");},delay);
+          delay+= parseInt(dl/bndw)*1000;
+            
+          }
+
+          if(r3.checked == true && dl>0)
+          {
+            setTimeout(function(){ 
+          drawLine(350,150,650,150,"black");
+          drawLine(300,200,300,350,"black");
+          drawLine(350,400,650,400,"blue");
+          drawLine(700,200,700,350,"black");},delay);
+          delay+= parseInt(dl/bndw)*1000;
+          }
+
+
+        setTimeout(function(){ 
+          drawLine(350,150,650,150,"black");
+          drawLine(300,200,300,350,"black");
+          drawLine(350,400,650,400,"black");
+          drawLine(700,200,700,350,"black");
+          myMoveRevY(180,40,60,30,460,460,"TOKEN"); },delay);
+          delay+=4800;
+
+            setTimeout(function(){ 
+        document.getElementById("dl").value=" ";
+      document.getElementById("dl").focus();
+
+          r1.disabled = true;
+          r2.disabled = false;
+          r3.disabled = false;
+          r4.disabled = false;},delay);
+        }
+        else if(btnCnt > 4)
+        {
+          r1.disabled = true;
+          r2.disabled = true;
+          r3.disabled = true;
+          r4.disabled = true;
+          document.getElementById("startBtn").disabled=true;
+          location.reload();
+          return ; 
+        }
+
+      }
+
+      if(chk2.checked == true)
+      {
+        var doc_id = document.getElementById("verticle"); 
+          var ctx = doc_id.getContext("2d");
+          ctx.clearRect(0,0,1000,550);
+          var img = document.getElementById("d1");
+          ctx.drawImage(img, 250, 100, 100, 100);
+          ctx.drawImage(img, 650, 100, 100, 100);
+          ctx.drawImage(img, 250, 350, 100, 100);
+          ctx.drawImage(img, 650, 350, 100, 100);
+
+          drawLine(350,150,650,150,"black");
+          drawLine(300,200,300,350,"black");
+          drawLine(350,400,650,400,"black");
+          drawLine(700,200,700,350,"black");
+
+          drawLine(350,120,650,120,"black");
+          drawLine(270,200,270,350,"black");
+          drawLine(350,430,650,430,"black");
+          drawLine(730,200,730,350,"black");
+
+          drawColorText(350,220,"1","red");
+          drawColorText(620,220,"2","green");
+          drawColorText(350,350,"4","blue");
+          drawColorText(620,350,"3","brown");
+          drawColorText(0,25,"Inner ring: Primary;Outer ring: Secondary. White channel is failed","brown");
+
+        if(btnCnt == 1)
+        {
+          myMoveX(179,50,60,30,180,180,"TOKEN");
+          r1.disabled = true;
+          r2.disabled = false;
+          r3.disabled = false;
+          r4.disabled = false;
+          var dlt = document.getElementById("dl").value;
+          var dl;
+          console.log(dlt.length);
+          if(dlt.length > 0)
+          {
+            dl = parseInt(document.getElementById("dl").value);
+          }
+          else
+          {
+            dl = 0; 
+          }
+
+          if((r2.checked == false && r3.checked == false && r4.checked == false) || dl == 0)
+          {
+            setTimeout(function(){ myMoveX(180,50,60,30,770,770,"TOKEN"); },delay);
+          }
+          if(r2.checked == true && dl>0)
+          {
+            setTimeout(function(){ 
+          drawLine(350,150,650,150,"red");
+          drawLine(300,200,300,350,"black");
+          drawLine(350,400,650,400,"black");
+          drawLine(700,200,700,350,"black");},delay);
+          delay+= parseInt(dl/bndw)*1000;
+
+          }
+          if(r3.checked == true && dl>0)
+          {
+            setTimeout(function(){ 
+          drawLine(350,150,650,150,"red");
+          drawLine(300,200,300,350,"black");
+          drawLine(350,400,650,400,"black");
+          drawLine(700,200,700,350,"red");},delay);
+          delay+= parseInt(dl/bndw)*1000;
+            
+          }
+
+          if(r4.checked == true && dl>0)
+          {
+            setTimeout(function(){ 
+          drawLine(350,150,650,150,"black");
+          drawLine(300,200,300,350,"red");
+          drawLine(350,400,650,400,"black");
+          drawLine(700,200,700,350,"black");},delay);
+          delay+= parseInt(dl/bndw)*1000;
+          }
+
+
+        setTimeout(function(){ 
+          drawLine(350,150,650,150,"black");
+          drawLine(300,200,300,350,"black");
+          drawLine(350,400,650,400,"black");
+          drawLine(700,200,700,350,"black");
+          myMoveX(180,50,60,30,770,770,"TOKEN"); },delay);
+          delay+=6500;
+
+            setTimeout(function(){ 
+        document.getElementById("dl").value=" ";
+      document.getElementById("dl").focus();
+
+          r1.disabled = false;
+          r2.disabled = true;
+          r3.disabled = false;
+          r4.disabled = false;},delay);
+
+          //delay+= 500;
+        
+        }
+        else if(btnCnt == 2)
+        { 
+          myMoveRevX(769,50,60,30,770,770,"TOKEN");
+          delay =500;
+          var dlt = document.getElementById("dl").value;
+          var dl;
+          console.log(dlt.length);
+          if(dlt.length > 0)
+          {
+            dl = parseInt(document.getElementById("dl").value);
+          }
+          else
+          {
+            dl = 0; 
+          }
+
+          if((r1.checked == false && r3.checked == false && r4.checked == false) || dl == 0)
+          {
+            setTimeout(function(){ myMoveRevX(180,50,60,30,770,770,"TOKEN"); },delay);
+            delay+=6500;
+            setTimeout(function(){ myMoveY(180,40,60,30,460,460,"TOKEN"); },delay);
+          }
+          if(r1.checked == true && dl>0)
+          {
+            setTimeout(function(){ 
+              drawLine(700,200,700,350,"white");
+          drawLine(350,120,650,120,"green");
+          drawLine(270,200,270,350,"black");
+          drawLine(350,430,650,430,"black");
+          drawLine(730,200,730,350,"black");},delay);
+          delay+= parseInt(dl/bndw)*1000;
+
+          }
+          if(r3.checked == true && dl>0)
+          {
+            setTimeout(function(){ 
+              drawLine(700,200,700,350,"white");
+          drawLine(350,120,650,120,"black");
+          drawLine(270,200,270,350,"black");
+          drawLine(350,430,650,430,"black");
+          drawLine(730,200,730,350,"green");},delay);
+          delay+= parseInt(dl/bndw)*1000;
+            
+          }
+
+          if(r4.checked == true && dl>0)
+          {
+            setTimeout(function(){ 
+              drawLine(700,200,700,350,"white");
+          drawLine(350,120,650,120,"black");
+          drawLine(270,200,270,350,"black");
+          drawLine(350,430,650,430,"green");
+          drawLine(730,200,730,350,"green");},delay);
+          delay+= parseInt(dl/bndw)*1000;
+          }
+
+
+        setTimeout(function(){ 
+          drawLine(700,200,700,350,"white");
+          drawLine(350,120,650,120,"black");
+          drawLine(270,200,270,350,"black");
+          drawLine(350,430,650,430,"black");
+          drawLine(730,200,730,350,"black");
+          myMoveRevX(180,50,60,30,740,740,"TOKEN"); },delay);
+          delay+=6500;
+
+        setTimeout(function(){ 
+          myMoveY(180,40,60,30,460,460,"TOKEN"); },delay);
+          delay+=4800;
+
+            setTimeout(function(){ 
+        document.getElementById("dl").value=" ";
+      document.getElementById("dl").focus();
+
+          r1.disabled = false;
+          r2.disabled = false;
+          r3.disabled = false;
+          r4.disabled = true;},delay);
+
+        }
+        else if(btnCnt == 3)
+        {
+
+         myMoveRevY(180,469,60,30,470,470,"TOKEN");
+          delay =500;
+          var dlt = document.getElementById("dl").value;
+          var dl;
+          console.log(dlt.length);
+          if(dlt.length > 0)
+          {
+            dl = parseInt(document.getElementById("dl").value);
+          }
+          else
+          {
+            dl = 0; 
+          }
+
+          if((r1.checked == false && r2.checked == false && r3.checked == false) || dl == 0)
+          {
+            setTimeout(function(){ myMoveX(180,470,60,30,770,770,"TOKEN"); },delay);
+          }
+          if(r1.checked == true && dl>0)
+          {
+            setTimeout(function(){ 
+              drawLine(700,200,700,350,"white");
+          drawLine(350,120,650,120,"black");
+          drawLine(270,200,270,350,"blue");
+          drawLine(350,430,650,430,"black");
+          drawLine(730,200,730,350,"black");},delay);
+          delay+= parseInt(dl/bndw)*1000;
+
+          }
+          if(r2.checked == true && dl>0)
+          {
+            setTimeout(function(){ 
+              drawLine(700,200,700,350,"white");
+          drawLine(350,120,650,120,"black");
+          drawLine(270,200,270,350,"black");
+          drawLine(350,430,650,430,"blue");
+          drawLine(730,200,730,350,"blue");},delay);
+          delay+= parseInt(dl/bndw)*1000;
+            
+          }
+
+          if(r3.checked == true && dl>0)
+          {
+            setTimeout(function(){ 
+              drawLine(700,200,700,350,"white");
+          drawLine(350,120,650,120,"black");
+          drawLine(270,200,270,350,"black");
+          drawLine(350,430,650,430,"blue");
+          drawLine(730,200,730,350,"black");},delay);
+          delay+= parseInt(dl/bndw)*1000;
+          }
+
+
+        setTimeout(function(){ 
+          drawLine(700,200,700,350,"white");
+          drawLine(350,120,650,120,"black");
+          drawLine(270,200,270,350,"black");
+          drawLine(350,430,650,430,"black");
+          drawLine(730,200,730,350,"black");
+          myMoveX(180,470,60,30,770,770,"TOKEN"); },delay);
+          delay+=6500;
+
+            setTimeout(function(){ 
+        document.getElementById("dl").value=" ";
+      document.getElementById("dl").focus();
+
+          r1.disabled = false;
+          r2.disabled = false;
+          r3.disabled = true;
+          r4.disabled = false;},delay);
+        }
+        else if(btnCnt == 4)
+        {
+
+
+          myMoveRevY(760,459,60,30,460,460,"TOKEN");
+          delay =500;
+          var dlt = document.getElementById("dl").value;
+          var dl;
+          console.log(dlt.length);
+          if(dlt.length > 0)
+          {
+            dl = parseInt(document.getElementById("dl").value);
+          }
+          else
+          {
+            dl = 0; 
+          }
+
+          if((r1.checked == false && r2.checked == false && r4.checked == false) || dl == 0)
+          {
+            setTimeout(function(){ myMoveRevY(760,50,60,30,460,460,"TOKEN"); },delay);
+          }
+          if(r1.checked == true && dl>0)
+          {
+            setTimeout(function(){ 
+              drawLine(700,200,700,350,"white");
+          drawLine(350,120,650,120,"brown");
+          drawLine(270,200,270,350,"black");
+          drawLine(350,430,650,430,"black");
+          drawLine(730,200,730,350,"brown");},delay);
+          delay+= parseInt(dl/bndw)*1000;
+
+          }
+          if(r2.checked == true && dl>0)
+          {
+            setTimeout(function(){ 
+              drawLine(700,200,700,350,"white");
+          drawLine(350,120,650,120,"black");
+          drawLine(270,200,270,350,"black");
+          drawLine(350,430,650,430,"black");
+          drawLine(730,200,730,350,"brown");},delay);
+          delay+= parseInt(dl/bndw)*1000;
+            
+          }
+
+          if(r4.checked == true && dl>0)
+          {
+            setTimeout(function(){
+            drawLine(700,200,700,350,"white"); 
+          drawLine(350,120,650,120,"black");
+          drawLine(270,200,270,350,"black");
+          drawLine(350,430,650,430,"brown");
+          drawLine(730,200,730,350,"black");},delay);
+          delay+= parseInt(dl/bndw)*1000;
+          }
+
+
+        setTimeout(function(){ 
+          drawLine(700,200,700,350,"white");
+          drawLine(350,120,650,120,"black");
+          drawLine(270,200,270,350,"black");
+          drawLine(350,430,650,430,"black");
+          drawLine(730,200,730,350,"black");
+          myMoveRevY(760,50,60,30,460,460,"TOKEN"); },delay);
+          delay+=4800;
+
+            setTimeout(function(){ 
+        document.getElementById("dl").value=" ";
+      document.getElementById("dl").focus();
+
+          r1.disabled = false;
+          r2.disabled = true;
+          r3.disabled = false;
+          r4.disabled = false;},delay);
+        }
+        else if(btnCnt > 4)
+        {
+          r1.disabled = true;
+          r2.disabled = true;
+          r3.disabled = true;
+          r4.disabled = true;
+          document.getElementById("startBtn").disabled=true;
+          location.reload();
+          return ; 
+        }
+      }
+
+      if(chk3.checked == true)
+      {
+        var doc_id = document.getElementById("verticle"); 
+          var ctx = doc_id.getContext("2d");
+          ctx.clearRect(0,0,1000,550);
+          var img = document.getElementById("d1");
+          ctx.drawImage(img, 250, 100, 100, 100);
+          ctx.drawImage(img, 650, 100, 100, 100);
+          ctx.drawImage(img, 250, 350, 100, 100);
+          ctx.drawImage(img, 650, 350, 100, 100);
+
+          drawThickLine(230,275,750,275,"black");
+
+          //drawThinLine(350,150,650,150,"black");
+          drawThinLine(300,200,300,350,"black");
+          //drawThinLine(350,400,650,400,"black");
+          drawThinLine(700,200,700,350,"black");
+
+          drawDashLine(350,120,650,120,"black");
+          drawDashLine(270,200,270,350,"black");
+          drawDashLine(350,430,650,430,"black");
+          drawDashLine(730,200,730,350,"black");
+
+          drawColorText(350,220,"1","red");
+          drawColorText(620,220,"2","green");
+          drawColorText(350,350,"4","blue");
+          drawColorText(620,350,"3","brown");
+          drawColorText(0,25,"TO+SA = Token + Successor Address");
+
+          if(btnCnt == 1)
+        {
+          r1.disabled = true;
+          r2.disabled = false;
+          r3.disabled = false;
+          r4.disabled = false;
+          var dlt = document.getElementById("dl").value;
+          var dl;
+          console.log(dlt.length);
+          if(dlt.length > 0)
+          {
+            dl = parseInt(document.getElementById("dl").value);
+          }
+          else
+          {
+            dl = 0; 
+          }
+
+          myMoveX(179,50,100,30,180,180,"TO+SA");
+          delay = 1300;
+          if((r2.checked == false && r3.checked == false && r4.checked == false) || dl == 0)
+          {
+            setTimeout(function(){ myMoveX(180,50,100,30,770,770,"TO+SA"); },delay);
+          }
+          if(r2.checked == true && dl>0)
+          {
+            setTimeout(function(){ 
+          drawThinLine(300,200,300,280,"red");
+          drawThinLine(700,200,700,280,"red");
+          drawThickLine(230,275,750,275,"red");},delay);
+          delay+= parseInt(dl/bndw)*1000;
+
+          }
+          if(r3.checked == true && dl>0)
+          {
+            setTimeout(function(){ 
+          drawThinLine(300,200,300,280,"red");
+          drawThinLine(700,200,700,350,"black");
+          drawThinLine(700,280,700,350,"red");
+          drawThickLine(230,275,750,275,"red");},delay);
+          delay+= parseInt(dl/bndw)*1000;
+            
+          }
+
+          if(r4.checked == true && dl>0)
+          {
+            setTimeout(function(){ 
+          drawThinLine(300,200,300,350,"red");
+          drawThinLine(700,200,700,350,"black");
+          drawThickLine(230,275,750,275,"red");},delay);
+          delay+= parseInt(dl/bndw)*1000;
+          }
+
+
+        setTimeout(function(){ 
+          drawThinLine(300,200,300,350,"black");
+          drawThinLine(700,200,700,350,"black");
+          drawThickLine(230,275,750,275,"black");
+          myMoveX(180,50,100,30,770,770,"TO+SA"); },delay);
+          delay+=6500;
+
+            setTimeout(function(){ 
+        document.getElementById("dl").value=" ";
+      document.getElementById("dl").focus();
+
+          r1.disabled = false;
+          r2.disabled = true;
+          r3.disabled = false;
+          r4.disabled = false;},delay);
+
+          //delay+= 500;
+        
+        }
+        else if(btnCnt == 2)
+        { 
+          myMoveY(760,49,100,30,50,50,"TO+SA");
+          delay =500;
+          var dlt = document.getElementById("dl").value;
+          var dl;
+          console.log(dlt.length);
+          if(dlt.length > 0)
+          {
+            dl = parseInt(document.getElementById("dl").value);
+          }
+          else
+          {
+            dl = 0; 
+          }
+
+          if((r1.checked == false && r3.checked == false && r4.checked == false) || dl == 0)
+          {
+            setTimeout(function(){ myMoveY(760,50,100,30,460,460,"TO+SA"); },delay);
+          }
+          if(r1.checked == true && dl>0)
+          {
+            setTimeout(function(){ 
+          drawThinLine(300,200,300,280,"green");
+          drawThinLine(700,200,700,280,"green");
+          drawThickLine(230,275,750,275,"green");},delay);
+          delay+= parseInt(dl/bndw)*1000;
+
+          }
+          if(r3.checked == true && dl>0)
+          {
+            setTimeout(function(){ 
+          drawThinLine(300,200,300,350,"black");
+          drawThinLine(700,200,700,350,"green");
+          drawThickLine(230,275,750,275,"green");},delay);
+          delay+= parseInt(dl/bndw)*1000;
+            
+          }
+
+          if(r4.checked == true && dl>0)
+          {
+            setTimeout(function(){ 
+          drawThinLine(300,280,300,350,"green");
+          drawThinLine(700,200,700,350,"black");
+          drawThinLine(700,200,700,280,"green");
+          drawThickLine(230,275,750,275,"green");},delay);
+          delay+= parseInt(dl/bndw)*1000;
+          }
+
+
+        setTimeout(function(){ 
+          drawThinLine(300,200,300,350,"black");
+          drawThinLine(700,200,700,350,"black");
+          drawThickLine(230,275,750,275,"black");
+          myMoveY(760,50,100,30,460,460,"TO+SA"); },delay);
+          delay+=4800;
+
+            setTimeout(function(){ 
+        document.getElementById("dl").value=" ";
+      document.getElementById("dl").focus();
+
+          r1.disabled = false;
+          r2.disabled = false;
+          r3.disabled = true;
+          r4.disabled = false;},delay);
+
+        }
+        else if(btnCnt == 3)
+        {
+
+          myMoveRevX(769,470,100,30,770,770,"TO+SA");
+          delay =500;
+          var dlt = document.getElementById("dl").value;
+          var dl;
+          console.log(dlt.length);
+          if(dlt.length > 0)
+          {
+            dl = parseInt(document.getElementById("dl").value);
+          }
+          else
+          {
+            dl = 0; 
+          }
+
+          if((r1.checked == false && r2.checked == false && r4.checked == false) || dl == 0)
+          {
+            setTimeout(function(){ myMoveRevX(140,470,100,30,770,770,"TO+SA"); },delay);
+          }
+          if(r1.checked == true && dl>0)
+          {
+            setTimeout(function(){ 
+          drawThinLine(300,200,300,280,"brown");
+          drawThinLine(700,280,700,350,"brown");
+          drawThickLine(230,275,750,275,"brown");},delay);
+          delay+= parseInt(dl/bndw)*1000;
+
+          }
+          if(r2.checked == true && dl>0)
+          {
+            setTimeout(function(){ 
+          drawThinLine(300,200,300,280,"black");
+          drawThinLine(700,200,700,350,"brown");
+          drawThickLine(230,275,750,275,"brown");},delay);
+          delay+= parseInt(dl/bndw)*1000;
+            
+          }
+
+          if(r4.checked == true && dl>0)
+          {
+            setTimeout(function(){ 
+          drawThinLine(300,280,300,350,"brown");
+          drawThinLine(700,200,700,350,"black");
+          drawThinLine(700,280,700,350,"brown");
+          drawThickLine(230,275,750,275,"brown");},delay);
+          delay+= parseInt(dl/bndw)*1000;
+          }
+
+
+        setTimeout(function(){ 
+          drawThinLine(300,200,300,350,"black");
+          drawThinLine(700,200,700,350,"black");
+          drawThickLine(230,275,750,275,"black");
+          myMoveRevX(140,470,100,30,770,770,"TO+SA"); },delay);
+          delay+=6500;
+
+            setTimeout(function(){ 
+        document.getElementById("dl").value=" ";
+      document.getElementById("dl").focus();
+
+          r1.disabled = false;
+          r2.disabled = false;
+          r3.disabled = false;
+          r4.disabled = true;},delay);
+        }
+        else if(btnCnt == 4)
+        {
+
+
+          myMoveRevY(140,459,100,30,460,460,"TO+SA");
+          delay =500;
+          var dlt = document.getElementById("dl").value;
+          var dl;
+          console.log(dlt.length);
+          if(dlt.length > 0)
+          {
+            dl = parseInt(document.getElementById("dl").value);
+          }
+          else
+          {
+            dl = 0; 
+          }
+
+          if((r1.checked == false && r2.checked == false && r3.checked == false) || dl == 0)
+          {
+            setTimeout(function(){ myMoveRevY(140,40,100,30,460,460,"TO+SA"); },delay);
+          }
+          if(r1.checked == true && dl>0)
+          {
+            setTimeout(function(){ 
+          drawThinLine(300,200,300,350,"blue");
+          drawThinLine(700,200,700,350,"black");
+          drawThickLine(230,275,750,275,"blue");},delay);
+          delay+= parseInt(dl/bndw)*1000;
+
+          }
+          if(r2.checked == true && dl>0)
+          {
+            setTimeout(function(){ 
+          drawThinLine(300,200,300,280,"black");    
+          drawThinLine(300,280,300,350,"blue");
+          drawThinLine(700,200,700,280,"blue");
+          drawThickLine(230,275,750,275,"blue");},delay);
+          delay+= parseInt(dl/bndw)*1000;
+            
+          }
+
+          if(r3.checked == true && dl>0)
+          {
+            setTimeout(function(){     
+          drawThinLine(300,280,300,350,"blue");
+          drawThinLine(700,200,700,280,"black");
+          drawThinLine(700,280,700,350,"blue");
+          drawThickLine(230,275,750,275,"blue");},delay);
+          delay+= parseInt(dl/bndw)*1000;
+          }
+
+
+        setTimeout(function(){ 
+          drawThinLine(300,200,300,350,"black");
+          drawThinLine(700,200,700,350,"black");
+          drawThickLine(230,275,750,275,"black");
+          myMoveRevY(140,40,100,30,460,460,"TO+SA"); },delay);
+          delay+=4800;
+
+            setTimeout(function(){ 
+        document.getElementById("dl").value=" ";
+      document.getElementById("dl").focus();
+
+          r1.disabled = true;
+          r2.disabled = false;
+          r3.disabled = false;
+          r4.disabled = false;},delay);
+        }
+        else if(btnCnt > 4)
+        {
+          r1.disabled = true;
+          r2.disabled = true;
+          r3.disabled = true;
+          r4.disabled = true;
+          document.getElementById("startBtn").disabled=true;
+          location.reload();
+          return ; 
+        }
+
+      }
+
+          if(chk4.checked == true)
+          {
+            var doc_id = document.getElementById("verticle"); 
+          var ctx = doc_id.getContext("2d");
+          ctx.clearRect(0,0,1000,550);
+          var img = document.getElementById("d1");
+          var imghub = document.getElementById("hub");
+          ctx.drawImage(img, 150, 50, 100, 100);
+          ctx.drawImage(img, 650, 50, 100, 100);
+          ctx.drawImage(img, 150, 400, 100, 100);
+          ctx.drawImage(img, 650, 400, 100, 100);
+          ctx.drawImage(imghub, 400, 225, 100, 100);
+
+          drawColorText(250,180,"1","red");
+          drawColorText(620,180,"2","green");
+          drawColorText(250,400,"4","blue");
+          drawColorText(620,400,"3","brown");
+          drawColorText(0,25,"TO+SA = Token + Successor Address.It pass through HUB.");
+
+          drawLine4Star("black");
+          
+           if(btnCnt == 1)
+        {
+          r1.disabled = true;
+          r2.disabled = false;
+          r3.disabled = false;
+          r4.disabled = false;
+          var dlt = document.getElementById("dl").value;
+          var dl;
+          console.log(dlt.length);
+          if(dlt.length > 0)
+          {
+            dl = parseInt(document.getElementById("dl").value);
+          }
+          else
+          {
+            dl = 0; 
+          }
+
+          drawtokenBox(260,60,100,30);
+          delay = 1300;
+          if((r2.checked == false && r3.checked == false && r4.checked == false) || dl == 0)
+          {
+            setTimeout(function(){ clearTokenBox(260,60,100,30);
+             onTOtwo("yellow");},delay);
+            delay+=2000;
+
+            setTimeout(function(){onTOtwo("black");
+            drawtokenBox(540,60,100,30);},delay);
+          }
+          if(r2.checked == true && dl>0)
+          {
+            setTimeout(function(){ onTOtwo("red");},delay);
+          delay+= parseInt(dl/bndw)*1000;
+
+
+            setTimeout(function(){ onTOtwo("black");},delay);
+          delay+= 1000;
+
+          }
+          if(r3.checked == true && dl>0)
+          {
+            setTimeout(function(){ onTOthree("red");},delay);
+          delay+= parseInt(dl/bndw)*1000;
+            setTimeout(function(){ onTOthree("black");},delay);
+          delay+= 1000;
+            
+          }
+
+          if(r4.checked == true && dl>0)
+          {
+            setTimeout(function(){ onTOfour("red");},delay);
+          delay+= parseInt(dl/bndw)*1000;
+            setTimeout(function(){ onTOfour("black");},delay);
+          delay+= 1000;
+          }
+
+            setTimeout(function(){ clearTokenBox(260,60,100,30);
+             onTOtwo("yellow");},delay);
+            delay+=2000;
+
+            setTimeout(function(){onTOtwo("black");
+            drawtokenBox(540,60,100,30);},delay);
+            delay+=1000;
+            
+            setTimeout(function(){ 
+        document.getElementById("dl").value=" ";
+      document.getElementById("dl").focus();
+
+          r1.disabled = false;
+          r2.disabled = true;
+          r3.disabled = false;
+          r4.disabled = false;},delay);
+
+          //delay+= 500;
+        
+        }
+        else if(btnCnt == 2)
+        { 
+          drawtokenBox(540,60,100,30);
+          delay =500;
+          var dlt = document.getElementById("dl").value;
+          var dl;
+          console.log(dlt.length);
+          if(dlt.length > 0)
+          {
+            dl = parseInt(document.getElementById("dl").value);
+          }
+          else
+          {
+            dl = 0; 
+          }
+
+          if((r1.checked == false && r3.checked == false && r4.checked == false) || dl == 0)
+          {
+            setTimeout(function(){ clearTokenBox(540,60,100,30);
+             towTOthree("yellow");},delay);
+            delay+=2000;
+
+            setTimeout(function(){towTOthree("black");
+            drawtokenBox(540,410,100,30);},delay);
+          }
+          if(r1.checked == true && dl>0)
+          {
+            setTimeout(function(){ towTOone("green")},delay);
+          delay+= parseInt(dl/bndw)*1000;
+            setTimeout(function(){ towTOone("black")},delay);
+          delay+= 1000;
+
+          }
+          if(r3.checked == true && dl>0)
+          {
+            setTimeout(function(){ towTOthree("green")},delay);
+          delay+= parseInt(dl/bndw)*1000;
+            setTimeout(function(){ towTOthree("black")},delay);
+          delay+= 1000;
+            
+          }
+
+          if(r4.checked == true && dl>0)
+          {
+            setTimeout(function(){ towTOfour("green")},delay);
+          delay+= parseInt(dl/bndw)*1000;
+            setTimeout(function(){ towTOfour("black")},delay);
+          delay+= 1000;
+          }
+
+            setTimeout(function(){ clearTokenBox(540,60,100,30);
+             towTOthree("yellow");},delay);
+            delay+=2000;
+
+            setTimeout(function(){towTOthree("black");
+            drawtokenBox(540,410,100,30);},delay);
+          delay+=1000;            
+            setTimeout(function(){ 
+        document.getElementById("dl").value=" ";
+      document.getElementById("dl").focus();
+
+          r1.disabled = false;
+          r2.disabled = false;
+          r3.disabled = true;
+          r4.disabled = false;},delay);
+
+        }
+        else if(btnCnt == 3)
+        {
+
+          drawtokenBox(540,410,100,30);
+          delay =500;
+          var dlt = document.getElementById("dl").value;
+          var dl;
+          console.log(dlt.length);
+          if(dlt.length > 0)
+          {
+            dl = parseInt(document.getElementById("dl").value);
+          }
+          else
+          {
+            dl = 0; 
+          }
+
+          if((r1.checked == false && r2.checked == false && r4.checked == false) || dl == 0)
+          {
+            setTimeout(function(){ clearTokenBox(540,410,100,30);
+             threeTOfour("yellow");},delay);
+            delay+=2000;
+
+            setTimeout(function(){threeTOfour("black");
+            drawtokenBox(260,410,100,30);},delay);
+          }
+          if(r1.checked == true && dl>0)
+          {
+            setTimeout(function(){ threeTOone("brown")},delay);
+          delay+= parseInt(dl/bndw)*1000;
+            setTimeout(function(){ threeTOone("black")},delay);
+          delay+= 1000;
+
+          }
+          if(r2.checked == true && dl>0)
+          {
+            setTimeout(function(){ threeTOtwo("brown")},delay);
+          delay+= parseInt(dl/bndw)*1000;
+            setTimeout(function(){ threeTOtwo("black")},delay);
+          delay+= 1000;            
+          }
+
+          if(r4.checked == true && dl>0)
+          {
+            setTimeout(function(){ threeTOfour("brown")},delay);
+          delay+= parseInt(dl/bndw)*1000;
+            setTimeout(function(){ threeTOfour("black")},delay);
+          delay+= 1000;
+          }
+
+            setTimeout(function(){ clearTokenBox(540,410,100,30);
+             threeTOfour("yellow");},delay);
+            delay+=2000;
+
+            setTimeout(function(){threeTOfour("black");
+            drawtokenBox(260,410,100,30);},delay);
+            delay+=1000;
+
+            setTimeout(function(){ 
+        document.getElementById("dl").value=" ";
+      document.getElementById("dl").focus();
+
+          r1.disabled = false;
+          r2.disabled = false;
+          r3.disabled = false;
+          r4.disabled = true;},delay);
+        }
+        else if(btnCnt == 4)
+        {
+
+
+          drawtokenBox(260,410,100,30);
+          delay =500;
+          var dlt = document.getElementById("dl").value;
+          var dl;
+          console.log(dlt.length);
+          if(dlt.length > 0)
+          {
+            dl = parseInt(document.getElementById("dl").value);
+          }
+          else
+          {
+            dl = 0; 
+          }
+
+          if((r1.checked == false && r2.checked == false && r3.checked == false) || dl == 0)
+          {
+            setTimeout(function(){ clearTokenBox(260,410,100,30);
+             fourTOone("yellow");},delay);
+            delay+=2000;
+
+            setTimeout(function(){fourTOone("black");
+            drawtokenBox(260,60,100,30);},delay);
+          }
+          if(r1.checked == true && dl>0)
+          {
+            setTimeout(function(){ fourTOone("blue")},delay);
+          delay+= parseInt(dl/bndw)*1000;
+            setTimeout(function(){ fourTOone("black")},delay);
+          delay+= 1000;
+
+          }
+          if(r2.checked == true && dl>0)
+          {
+            setTimeout(function(){ fourTOtwo("blue")},delay);
+          delay+= parseInt(dl/bndw)*1000;
+            setTimeout(function(){ fourTOtwo("black")},delay);
+          delay+= 1000;            
+          }
+
+          if(r3.checked == true && dl>0)
+          {
+            setTimeout(function(){ fourTOthree("blue")},delay);
+          delay+= parseInt(dl/bndw)*1000;
+            setTimeout(function(){ fourTOthree("black")},delay);
+          delay+= 1000;
+          }
+
+            setTimeout(function(){ clearTokenBox(260,410,100,30);
+             fourTOone("yellow");},delay);
+            delay+=2000;
+
+            setTimeout(function(){fourTOone("black");
+            drawtokenBox(260,60,100,30);},delay);
+            delay+=1000;
+
+            setTimeout(function(){ 
+        document.getElementById("dl").value=" ";
+      document.getElementById("dl").focus();
+
+          r1.disabled = true;
+          r2.disabled = false;
+          r3.disabled = false;
+          r4.disabled = false;},delay);
+        }
+        else if(btnCnt > 4)
+        {
+          r1.disabled = true;
+          r2.disabled = true;
+          r3.disabled = true;
+          r4.disabled = true;
+          document.getElementById("startBtn").disabled=true;
+          location.reload();
+          return ; 
+        }
+
+          }
+
+    }
+
+    function myMoveX(rectX,rectY,rectWidth,rectHeight,end,clearWidth,txt) {
+
+      var doc_id = document.getElementById("verticle"); 
+      var ctx = doc_id.getContext("2d"); 
+      var count = 0; 
+      var pos = parseInt(rectX);
+      var pos1=parseInt(rectY);
+      var id = setInterval(frame, 100);
+      function frame() {
+        if (pos >= parseInt(end) ) {
+          clearInterval(id);
+        } else {
+
+          ctx.clearRect(rectX-3, rectY-3, clearWidth ,rectHeight+7); 
+          ctx.beginPath();
+          ctx.lineWidth = 3;
+          ctx.moveTo(pos, rectY); 
+          ctx.strokeStyle = "yellow";
+          ctx.setLineDash([5, 0]);
+          ctx.rect(pos, rectY, rectWidth, rectHeight);
+          ctx.stroke();
+          ctx.font = "15px Georgia";
+          ctx.fillText(txt,parseInt(pos-20 +(parseInt(rectWidth-7)/2)), parseInt(rectY+(parseInt(rectHeight+10)/2)));
+          
+          pos+=10;
+          count+=1;
+        }
+        
+      }
+    }
+
+    function myMoveRevX(rectX,rectY,rectWidth,rectHeight,end,clearWidth,txt) {
+
+      var doc_id = document.getElementById("verticle"); 
+      var ctx = doc_id.getContext("2d"); 
+      var count = 0; 
+      var pos = parseInt(end);
+      var pos1=parseInt(rectY);
+      var id = setInterval(frame, 100);
+      function frame() {
+        if (pos < parseInt(rectX) ) {
+          clearInterval(id);
+        } else {
+      ctx.clearRect(rectX-3, rectY-3, clearWidth ,rectHeight+7); 
+          ctx.beginPath();
+          ctx.lineWidth = 3;
+          ctx.moveTo(pos, rectY); 
+          ctx.strokeStyle = "yellow";
+          ctx.setLineDash([5, 0]);
+          ctx.rect(pos, rectY, rectWidth, rectHeight);
+          ctx.stroke();
+          ctx.font = "15px Georgia";
+          ctx.fillText(txt,parseInt(pos-20 +(parseInt(rectWidth-7)/2)), parseInt(rectY+(parseInt(rectHeight+10)/2)));
+          
+          pos-=10;
+          count+=1;
+        }
+        
+      }
+    }
+
+    function myMoveY(rectX,rectY,rectWidth,rectHeight,end,clearWidth,txt) {
+
+      var doc_id = document.getElementById("verticle"); 
+      var ctx = doc_id.getContext("2d"); 
+      var count = 0; 
+      var pos = parseInt(rectY);
+      var id = setInterval(frame, 100);
+      function frame() {
+        if (pos > parseInt(end) ) {
+          console.log("SUSSPEND!!");
+          clearInterval(id);
+        } else {
+          pos+=10;
+          ctx.clearRect(rectX-3, rectY-3, rectWidth+10, clearWidth+10); 
+          ctx.beginPath();
+          ctx.lineWidth = 3; 
+          ctx.strokeStyle = "yellow";
+          ctx.setLineDash([5, 0]);
+          ctx.rect(rectX, pos, rectWidth, rectHeight);
+          ctx.stroke();
+          ctx.font = "15px Georgia";
+          ctx.fillText(txt,parseInt(rectX-20 +(parseInt(rectWidth-7)/2)), parseInt(pos+(parseInt(rectHeight+10)/2)));
+          
+          count+=1;
+        }
+        
+      }
+    }
+
+    function myMoveRevY(rectX,rectY,rectWidth,rectHeight,end,clearWidth,txt) {
+
+      var doc_id = document.getElementById("verticle"); 
+      var ctx = doc_id.getContext("2d"); 
+      var count = 0; 
+      var pos = parseInt(end);
+      
+      var id = setInterval(frame, 100);
+      function frame() {
+        if (pos < parseInt(rectY) ) {
+          console.log("SUSSPEND!!");
+          clearInterval(id);
+        } else {
+         
+          ctx.clearRect(rectX-3, rectY-3, rectWidth+7, clearWidth+7); 
+          ctx.beginPath();
+          ctx.lineWidth = 3; 
+          ctx.strokeStyle = "yellow";
+          ctx.setLineDash([5, 0]);
+          ctx.rect(rectX, pos, rectWidth, rectHeight);
+          ctx.stroke();
+          ctx.font = "15px Georgia";
+          ctx.fillText(txt,parseInt(rectX-20 +(parseInt(rectWidth-7)/2)), parseInt(pos+(parseInt(rectHeight+10)/2)));
+          
+          pos-=10;
+          count+=1;
+        }
+        
+      }
+    }
+
+  </script>
+
+</head>
+<body style="background-color: skyblue;">
+  <header style="padding: 1px; text-align: center;font-family: monospace; font-size: 32px; background-color: rgb(0,255,0); ">Token Passing Protocol</header>
+ 
+      
+        <div style="width: 1000px">
+        <p style="color: red;font-family: sans-serif;font-size: 20px;">HOW TO USE Simulator?</p>
+        <p style="font-family: sans-serif;font-size: 20px;">SELECT TOPOLOGY -- ENTER DATA SIZE -- SELECT RECIEVERS -- PRESS START/NEXT</p>
+        </div>
+
+   <div class="row"> 
+  <div class="column" >
+    
+     <p style="font-size: 20px">Physical Ring:<input name="topology" type="radio" value="Physical Ring" id="s1" style="height: 20px; width: 20px"></p>
+  
+  </div>
+  <div class="column">
+   
+  <p style="font-size: 20px">Dual Ring:<input name="topology" type="radio" value="Dual Ring" id="s2" style="height: 20px; width: 20px"></p>
+  
+  </div>
+  <div class="column">
+    
+  <p style="font-size: 20px">Bus Ring:<input name="topology" type="radio" value="Bus Ring" id="s3" style="height: 20px; width: 20px"></p>
+
+  </div>
+  <div class="column">
+   
+  <p style="font-size: 20px">Star Ring:<input name="topology" type="radio" value="Star Ring" id="s4" style="height: 20px; width: 20px"></p>
+          
+  </div>
+</div>
+ <table>
+  <tr>
+    <th>
+    <canvas id="verticle" width="1000" height="550"> 
+      <img src="secondary.png" alt="device" id="d1">
+      <img src="hub.jfif" alt="hub" id="hub">
+      </canvas>
+      </th>
+
+    <th style="text-align: center;">
+      <form>
+        <p>Enter Data Size: <input type="text" name="dl" id="dl" style="height: 30px;width: 80px;font-size: 16px;text-align: center;">MB</p>
+        <p style="font-size: 16px;">Select Recievers of Current Sender Node.</p>
+        <p>1: <input type="checkbox" name="dataL1" value="0" id="dataL1" style="height: 30px; width: 30px;" disabled="true"></p>
+        <p>2: <input type="checkbox" name="dataL2" value="0" id="dataL2" style="height: 30px; width: 30px;"></p>
+        <p>3: <input type="checkbox" name="dataL3" value="0" id="dataL3" style="height: 30px; width: 30px;"></p>
+        <p>4: <input type="checkbox" name="dataL4" value="0" id="dataL4" style="height: 30px; width: 30px;"></p>
+        <input type="button" name="start" value="Start/Next" id="startBtn" onclick="startProcess()" style="text-align: center;padding: 15px 32px;font-size: 16px;">
+        <input type="button" name="reset" value="Reset" onclick="resetBtnCnt()" style="text-align: center;padding: 15px 32px;font-size: 16px;">
+      </form>
+      </th>
+    </tr> 
+</table>
+</body>
+</html>

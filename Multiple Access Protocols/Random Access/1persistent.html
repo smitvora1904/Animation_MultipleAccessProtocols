@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>1-persistent</title>
+    <script type="text/javascript">
+    //ellipses  ellipse
+    //lines  line
+    //rect  Rectangle 
+    //rect2 rectangle 2 lines
+
+    function load()
+        {
+            localStorage.clickcount=0;
+        var c = document.getElementById("GFG");
+        var ctx = c.getContext("2d");
+
+
+
+        ctx.beginPath();
+        ctx.fillStyle = "lightblue";
+        ctx.strokeStyle='lightblue';
+        ctx.lineWidth = 4;
+        ctx.rect(0,0, 1536, 700);
+        ctx.stroke();
+        ctx.fill();
+        ctx.beginPath();
+        ctx.fillStyle = "yellow";
+        ctx.fillText("aa",900,200);
+        ctx.fill();
+
+        ctx.beginPath(); 
+        ctx.moveTo(800,0); 
+        ctx.strokeStyle = 'darkgreen'; 
+        ctx.lineWidth=7;
+        ctx.lineTo(800,700); 
+        ctx.stroke();
+
+        ctx.beginPath(); 
+        ctx.moveTo(800,270); 
+        ctx.strokeStyle = 'darkgreen'; 
+        ctx.lineWidth=7;
+        ctx.lineTo(1535,270); 
+        ctx.stroke();
+
+
+        ctx.beginPath();
+        ctx.fillStyle = "blue";
+        ctx.strokeStyle='blue';
+        ctx.font = "25px Arial";
+        ctx.lineWidth = 4;
+        ctx.rect(820,10, 700, 240);
+        ctx.stroke();
+        ctx.fill();
+        ctx.beginPath();
+        ctx.fillStyle = "yellow";
+     
+        ctx.fillText("The I-persistent method is simple and straightforward.",830,30);
+        ctx.fillText(" In this method, after the station finds the line idle,",830,60);
+        ctx.fillText("it sends its frame immediately (with probability I).",830,90);
+        ctx.fillText("This method has the highest chance of collision because ",830,120);
+        ctx.fillText("two or more stations may find the line idle and send",830,150);
+        ctx.fillText("their frames immediately.",830,180);
+
+         ctx.fill();
+        ctx.font = "40px Arial";
+        ctx.fillStyle = "orange"
+        ctx.fillText("CSMA Methods", 200, 47);
+        ctx.font = "30px Arial";
+        ctx.fillStyle = "green"
+        ctx.fillText("Procedure for 1 Persistent Method", 150, 77);
+
+        /*ctx.beginPath();
+        ctx.fillStyle = "blue";
+        ctx.strokeStyle='blue';
+        ctx.font = "15px Arial";
+        ctx.lineWidth = 4;
+        ctx.rect(810,280, 715, 380);
+        ctx.stroke();
+        ctx.fill();*/
+        }
+    function clr()
+    {
+            var canvas = document.getElementById("GFG");
+            ctx = canvas.getContext('2d');
+            ctx.clearRect(810,280, 715, 380);
+            ctx.beginPath();
+            ctx.fillStyle = "lightblue";
+            ctx.strokeStyle='lightblue';
+            ctx.rect(810,280, 715, 380);
+            ctx.stroke();
+            ctx.fill();
+    }
+    function sets(txx)
+    {
+            var canvas = document.getElementById("GFG");
+            ctx = canvas.getContext('2d');
+            ctx.font = "30px Arial";
+            ctx.fillStyle="green"
+            ctx.rect(810,280, 715, 380);
+            ctx.fillText(txx, 900, 450);
+    }
+    function seti(ix,iy,iname)
+    {
+            var doc_id = document.getElementById("GFG"); 
+            var context = doc_id.getContext("2d");
+            const img = new Image()
+            img.src = iname
+            img.onload = () => {
+            context.drawImage(img, ix,iy)
+        }
+    }
+    function clickCounter() 
+    {
+        if(typeof(Storage) !== "undefined") 
+        {
+            if (localStorage.clickcount) 
+            {
+                localStorage.clickcount = Number(localStorage.clickcount)+1;
+            }
+            else 
+            {
+                localStorage.clickcount = 1;
+            }
+          /*  document.getElementById("result").value = localStorage.clickcount ;
+        } 
+        else {
+                document.getElementById("result").value = 0;
+                }*/
+        
+        }
+        if(localStorage.clickcount==1)
+        {
+            //ellipses(x,y,txt,tx,ty)
+            clr()
+            ellipses(450, 150,"Start",420,157);
+            sets("Station has a frame to send")
+
+        }
+        else if(localStorage.clickcount==2)
+        {
+            clr()
+            //lines(x1,y1,x2,y2)
+            lines(450,190,450,240);
+            
+        }
+        else if(localStorage.clickcount==3)
+        {
+            clr()
+            //rhombus(x1,y1,x2,y2,x3,y3,x4,y4,txt1,txt2,tx1,ty1,tx2,ty2)
+            rhombus(450,240,600,300,450,360,300,300,"Channel?","",400,300,410,300);
+            sets("Check either ACK Received or not?")
+
+        }
+        else if(localStorage.clickcount==4)
+        {
+            lines(600,300,700,300)
+            lines(700,300,700,225)
+            lines(700,225,450,225)
+			var canvas = document.getElementById("GFG");
+            ctx = canvas.getContext('2d');
+            ctx.font = "30px Arial";
+            ctx.fillText("Busy", 610, 290)
+            
+
+        }
+        else if(localStorage.clickcount==5)
+        {
+            lines(450,360,450,460)
+			var canvas = document.getElementById("GFG");
+            ctx = canvas.getContext('2d');
+            ctx.font = "30px Arial";
+            ctx.fillText("Idle", 460,400)
+            
+
+        }
+        else if(localStorage.clickcount==6)
+        {
+        	clr()
+            ellipses(450, 460,"Success",400,467);
+            sets("Station can Transmit")
+        }
+       
+
+        else if(localStorage.clickcount==7)
+        {
+            clr()
+            var canvas = document.getElementById("GFG");
+            ctx = canvas.getContext('2d');
+            ctx.clearRect(0,100, 750, 650);
+            ctx.beginPath();
+            ctx.fillStyle = "lightblue";
+            ctx.strokeStyle='lightblue';
+            ctx.rect(0,100, 750, 650);
+            ctx.stroke();
+            ctx.fill();
+                        localStorage.clickcount=0;
+
+            //change() 
+            //abc()
+        }
+
+    }
+
+    function abc(){
+
+        var doc_id = document.getElementById("GFG"); 
+        var context = doc_id.getContext("2d"); 
+        const img = new Image()
+        img.src = "b.gif"
+        img.onload = () => {
+        context.drawImage(img, 600,0)
+    } 
+    }
+    function lines(x1,y1,x2,y2){
+        var doc_id = document.getElementById("GFG"); 
+        var context = doc_id.getContext("2d"); 
+        context.beginPath(); 
+        context.moveTo(x1,y1); 
+        context.strokeStyle = 'green'; 
+        context.lineTo(x2,y2); 
+        context.stroke(); 
+
+    }
+
+    function ellipses(x,y,txt,tx,ty)
+    {
+        var canvas = document.getElementById("GFG");
+        ctx = canvas.getContext('2d');
+
+        
+        ctx.beginPath();
+        ctx.fillStyle = "yellow";
+        ctx.strokeStyle='black';
+        ctx.font = "30px Arial";
+        ctx.lineWidth = 4;
+        ctx.ellipse(x,y, 40,80, Math.PI/2, 0, 2 * Math.PI);
+        ctx.stroke();
+        ctx.fill();
+        ctx.beginPath();
+        ctx.fillStyle = "black";
+        ctx.fillText(txt,tx,ty);
+        ctx.fill();
+    }
+    function change()
+    {
+        var canvas = document.getElementById("GFG");
+        ctx = canvas.getContext('2d');
+        ctx.font = "30px Arial";
+        ctx.fillText("Hello World", 10, 50);
+    }
+    function rect(x,y,w,h,txt,tx,ty)
+    {
+        var c = document.getElementById("GFG");
+        var ctx = c.getContext("2d");
+        ctx.beginPath();
+        ctx.fillStyle = "orange";
+        ctx.strokeStyle='black';
+        ctx.font = "20px Arial";
+        ctx.lineWidth = 4;
+        ctx.rect(x,y, w, h);
+        ctx.stroke();
+        ctx.fill();
+        ctx.beginPath();
+        ctx.fillStyle = "black";
+        ctx.fillText(txt,tx,ty);
+        ctx.fill();
+    }
+    function rect2(x,y,w,h,txt1,txt2,tx1,ty1,tx2,ty2)
+    {
+        var c = document.getElementById("GFG");
+        var ctx = c.getContext("2d");
+        ctx.beginPath();
+        ctx.fillStyle = "orange";
+        ctx.strokeStyle='black';
+        ctx.font = "20px Arial";
+        ctx.lineWidth = 4;
+        ctx.rect(x,y, w, h);
+        ctx.stroke();
+        ctx.fill();
+        ctx.beginPath();
+        ctx.fillStyle = "black";
+        ctx.fillText(txt1,tx1,ty1);
+        ctx.fillText(txt2,tx2,ty2);
+        ctx.fill();
+    }
+    function rhombus(x1,y1,x2,y2,x3,y3,x4,y4,txt1,txt2,tx1,ty1,tx2,ty2)
+    {
+        var c = document.getElementById("GFG");
+        var ctx = c.getContext('2d');
+        ctx.beginPath();
+        ctx.fillStyle = '#51FF0D';
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2,y2);
+        ctx.lineTo(x3,y3);
+        ctx.lineTo(x4,y4);
+        ctx.closePath();
+        ctx.fill();
+        ctx.beginPath();
+        ctx.font = "30px Arial";
+        ctx.fillStyle = "black";
+        ctx.fillText(txt1,tx1,ty1);
+        ctx.fillText(txt2,tx2,ty2);
+        ctx.fill();
+    }
+    
+    </script>
+    
+</head>
+<body onload="load()">
+    <canvas id="GFG" width="1536" height="670"></canvas> 
+        <form style="background-color: lightblue">
+    <input type="button" name="start" value="Start/Next" onclick="clickCounter()" style="text-align: center;padding: 15px 32px;font-size: 16px;margin-left: 500px">
+  </form>
+
+</body>
+</html>

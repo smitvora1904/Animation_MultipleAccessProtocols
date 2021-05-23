@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSMA/CA</title>
+    <script type="text/javascript">
+    //ellipses  ellipse
+    //lines  line
+    //rect  Rectangle 
+    //rect2 rectangle 2 lines
+
+    function load()
+        {
+            localStorage.clickcount=0;
+            var c = document.getElementById("GFG");
+        var ctx = c.getContext("2d");
+
+
+
+        ctx.beginPath();
+        ctx.fillStyle = "lightblue";
+        ctx.strokeStyle='lightblue';
+        ctx.lineWidth = 4;
+        ctx.rect(0,0, 1536, 700);
+        ctx.stroke();
+        ctx.fill();
+        ctx.beginPath();
+        ctx.fillStyle = "yellow";
+        ctx.fillText("aa",900,200);
+        ctx.fill();
+
+        ctx.beginPath(); 
+        ctx.moveTo(800,0); 
+        ctx.strokeStyle = 'darkgreen'; 
+        ctx.lineWidth=7;
+        ctx.lineTo(800,700); 
+        ctx.stroke();
+
+        ctx.beginPath(); 
+        ctx.moveTo(800,270); 
+        ctx.strokeStyle = 'darkgreen'; 
+        ctx.lineWidth=7;
+        ctx.lineTo(1535,270); 
+        ctx.stroke();
+
+
+        ctx.beginPath();
+        ctx.fillStyle = "blue";
+        ctx.strokeStyle='blue';
+        ctx.font = "15px Arial";
+        ctx.lineWidth = 4;
+        ctx.rect(820,10, 700, 240);
+        ctx.stroke();
+        ctx.fill();
+        ctx.beginPath();
+        ctx.fillStyle = "yellow";
+        ctx.fillText("The basic idea behind CSMA/CA is that a station needs to be able to receive while transmitting",830,30);
+        ctx.fillText("to detect a collision. When there is no collision, the station receives its own signal.",830,50);
+        ctx.fillText("When there is a collision, the station receives two signals:",830,70);
+        ctx.fillText("its own signal and the signal transmitted by a second station.",830,95);
+        ctx.fillText("Collisions are avoided through the use of CSMA/CA's three strategies: , ",830,115);
+        ctx.fillText("The interframe space, The contention window, and acknowledgments ",830,135);
+        ctx.fillText("In CSMA/CA, the IFS can also be used to define the priority of a station or a frame.",830,155);
+        ctx.fillText("The contention window is an amount of time divided into slots.",830,175);
+        ctx.fillText("The acknowledgment can help guarantee that the receiver has received the frame.",830,195);
+
+         ctx.fill();
+
+        ctx.font = "30px Arial";
+        ctx.fillStyle = "green"
+        ctx.fillText("Procedure for CSMA/CA protocol", 75, 27);
+
+        }
+
+    function clr()
+    {
+            var canvas = document.getElementById("GFG");
+            ctx = canvas.getContext('2d');
+            ctx.clearRect(810,280, 715, 380);
+            ctx.beginPath();
+            ctx.fillStyle = "lightblue";
+            ctx.strokeStyle='lightblue';
+            ctx.rect(810,280, 715, 380);
+            ctx.stroke();
+            ctx.fill();
+    }
+    function sets(txx)
+    {
+            var canvas = document.getElementById("GFG");
+            ctx = canvas.getContext('2d');
+            ctx.font = "30px Arial";
+            ctx.fillStyle="green"
+            ctx.rect(810,280, 715, 380);
+            ctx.fillText(txx, 900, 450);
+    }
+    function seti(ix,iy,iname)
+    {
+            var doc_id = document.getElementById("GFG"); 
+            var context = doc_id.getContext("2d");
+            const img = new Image()
+            img.src = iname
+            img.onload = () => {
+            context.drawImage(img, ix,iy)
+        }
+    }
+    function clickCounter() 
+    {
+        if(typeof(Storage) !== "undefined") 
+        {
+            if (localStorage.clickcount) 
+            {
+                localStorage.clickcount = Number(localStorage.clickcount)+1;
+            }
+            else 
+            {
+                localStorage.clickcount = 1;
+            }
+          /*  document.getElementById("result").value = localStorage.clickcount ;
+        } 
+        else {
+                document.getElementById("result").value = 0;
+                }*/
+        
+        }
+        if(localStorage.clickcount==1)
+        {
+            clr()
+            //ellipses(x,y,txt,tx,ty)
+            ellipses(600, 35,"Start",580,40);
+            sets("Station has a frame to send")
+
+        }
+        else if(localStorage.clickcount==2)
+        {
+            clr()
+            //lines(x1,y1,x2,y2)
+            lines(600,50,600,70);
+        }
+        else if(localStorage.clickcount==3)
+        {
+            clr()
+            //small rectangle
+            //rect(x,y,w,h,txt,tx,ty)
+            rect(560,70,80,30,"K=0",580,90);
+            sets("Set K=0 at initial stage");
+
+        }
+
+        else if(localStorage.clickcount==4)
+        {
+            clr()
+            //lines(x1,y1,x2,y2)
+            lines(600,100,600,150);
+        }
+        else if(localStorage.clickcount==5)
+        {
+            clr()
+            //rhombus(x1,y1,x2,y2,x3,y3,x4,y4,txt1,txt2,tx1,ty1,tx2,ty2)
+            rhombus(600,150,680,180,600,210,520,180,"Idle","Channel?",585,172,565,192);
+            sets("Check either Channel is Idle or not?")
+
+
+        }
+        else if(localStorage.clickcount==6)
+        {
+            //lines(x1,y1,x2,y2)
+            lines(680,180,710,180);
+            var canvas = document.getElementById("GFG");
+            ctx = canvas.getContext('2d');
+            ctx.font = "16px Arial";
+            ctx.fillText("No", 685, 175);
+            lines(710,180,710,135);
+            lines(710,135,600,135);
+        }
+        else if(localStorage.clickcount==7)
+        {
+            //lines(x1,y1,x2,y2)
+            lines(600,210,600,230);
+            var canvas = document.getElementById("GFG");
+            ctx = canvas.getContext('2d');
+            ctx.font = "16px Arial";
+            ctx.fillText("Yes", 605, 225);
+        }
+        else if(localStorage.clickcount==8)
+        {
+            clr()
+            //medium rectangle
+            //rect(x,y,w,h,txt,tx,ty)
+            rect(530,230,140,30,"Wait IFS time",550,250);
+            var canvas = document.getElementById("GFG");
+            ctx = canvas.getContext('2d');
+            ctx.font = "30px Arial";
+            ctx.fillStyle="green"
+            ctx.fillText("Interframe spacing are the minimum number ", 850, 450);
+            ctx.fillText("of microseconds that a channel must remain ", 850, 480);
+            ctx.fillText("clear after the previous transmission ends.", 850, 510);
+            
+        }
+        else if(localStorage.clickcount==9)
+        {
+            clr()
+            //lines(x1,y1,x2,y2)
+            lines(600,260,600,280);
+        }
+        else if(localStorage.clickcount==10)
+        {
+            clr()
+            //rhombus(x1,y1,x2,y2,x3,y3,x4,y4,txt1,txt2,tx1,ty1,tx2,ty2)
+            rhombus(600,280,680,310,600,340,520,310,"Still","Idle?",585,305,580,320);
+            sets("Is the Channel still Idle?")
+
+        }
+        else if(localStorage.clickcount==11)
+        {
+            //lines(x1,y1,x2,y2)
+            lines(680,310,730,310);
+            var canvas = document.getElementById("GFG");
+            ctx = canvas.getContext('2d');
+            ctx.font = "16px Arial";
+            ctx.fillText("No", 685, 305);
+            lines(730,310,730,120);
+            lines(730,120,600,120);
+        }
+        else if(localStorage.clickcount==12)
+        {
+            //lines(x1,y1,x2,y2)
+            lines(600,340,600,360);
+            var canvas = document.getElementById("GFG");
+            ctx = canvas.getContext('2d');
+            ctx.font = "16px Arial";
+            ctx.fillText("Yes", 605, 355);
+        }
+        else if(localStorage.clickcount==13)
+        {
+            clr()
+            //big rectangle
+            //rect(x,y,w,h,txt1,txt2,tx1,ty1,tx2,ty2)
+            rect(520,360,160,60,"Choose a Random",530,375);
+
+            var canvas = document.getElementById("GFG");
+            ctx = canvas.getContext('2d');
+            ctx.font = "16px Arial";
+            ctx.fillText("Number R between", 530, 390)
+            ctx.fillText("0 to (2^k)-1", 545, 410)
+            sets("Probability of Data Transmission ")
+            ctx.font = "30px Arial";
+            ctx.fillStyle="green"
+            ctx.fillText("is more as K increases", 900, 475);
+        }
+        else if(localStorage.clickcount==14)
+        {
+            clr()
+            //lines(x1,y1,x2,y2)
+            lines(600,420,600,440);
+        }
+        else if(localStorage.clickcount==15)
+        {
+            clr()
+            //medium rectangle
+            //rect(x,y,w,h,txt,tx,ty)
+            rect(530,440,140,30,"Wait R Slots",550,460);
+            sets("Waiting for the slots to send Frame")
+            var canvas = document.getElementById("GFG");
+            ctx = canvas.getContext('2d');
+            ctx.font = "30px Arial";
+            ctx.fillStyle="green"
+            ctx.fillText("It depends on R (Probability of K)", 900, 480);
+        }
+        else if(localStorage.clickcount==16)
+        {
+            clr()
+            //lines(x1,y1,x2,y2)
+            lines(600,470,600,490);
+        }
+        else if(localStorage.clickcount==17)
+        {
+            clr()
+            //medium rectangle
+            //rect(x,y,w,h,txt,tx,ty)
+            rect(530,490,140,30,"Send Frame",550,510);
+            seti(900,425,"11.jpg");
+        }
+        else if(localStorage.clickcount==18)
+        {
+            clr()
+            //lines(x1,y1,x2,y2)
+            lines(600,520,600,540);
+        }
+        else if(localStorage.clickcount==19)
+        {
+
+            //medium rectangle
+            //rect(x,y,w,h,txt,tx,ty)
+            rect(530,540,140,30,"Wait time-out",550,560);
+            sets("Waiting time is Finished")
+        }
+        else if(localStorage.clickcount==20)
+        {
+            clr()
+            //lines(x1,y1,x2,y2)
+            lines(600,570,600,580);
+        }
+        else if(localStorage.clickcount==21)
+        {
+            clr()
+            //rhombus(x1,y1,x2,y2,x3,y3,x4,y4,txt1,txt2,tx1,ty1,tx2,ty2)
+            rhombus(600,580,680,610,600,640,520,610,"ACK","received?",580,605,570,620);
+            sets("Either ACK received or not?")
+
+        }
+        else if(localStorage.clickcount==22)
+        {
+            //lines(x1,y1,x2,y2)
+            lines(600,640,600,655);
+            var canvas = document.getElementById("GFG");
+            ctx = canvas.getContext('2d');
+            ctx.font = "16px Arial";
+            ctx.fillText("Yes", 605, 650);
+        }
+        else if(localStorage.clickcount==23)
+        {
+            clr()
+            //ellipses(x,y,txt,tx,ty)
+            ellipses(600, 670,"Success",570,675);
+            sets("Frame Successfully sent")
+
+        }
+        else if(localStorage.clickcount==24)
+        {
+            //lines(x1,y1,x2,y2)
+            lines(520,610,480,610);
+            var canvas = document.getElementById("GFG");
+            ctx = canvas.getContext('2d');
+            ctx.font = "16px Arial";
+            ctx.fillText("No", 490, 605);
+        }
+        else if(localStorage.clickcount==25)
+        {
+            clr()
+            //small rectangle
+            //rect(x,y,w,h,txt,tx,ty)
+            rect(400,595,80,30,"K=K+1",415,615);
+            sets("K value is increased")
+        }
+        else if(localStorage.clickcount==26)
+        {
+            clr()
+            //lines(x1,y1,x2,y2)
+            lines(400,610,380,610);
+        }
+        else if(localStorage.clickcount==27)
+        {
+            clr()
+            //rhombus(x1,y1,x2,y2,x3,y3,x4,y4,txt1,txt2,tx1,ty1,tx2,ty2)
+            rhombus(300,580,380,610,300,640,220,610,"K>15"," ",280,610,270,620);
+            sets("Is K>15?")
+
+        }
+        else if(localStorage.clickcount==28)
+        {
+            //lines(x1,y1,x2,y2)
+            lines(300,640,300,660);
+            var canvas = document.getElementById("GFG");
+            ctx = canvas.getContext('2d');
+            ctx.font = "16px Arial";
+            ctx.fillText("Yes", 305, 655);
+        }
+        else if(localStorage.clickcount==29)
+        {
+            clr()
+            //ellipses(x,y,txt,tx,ty)
+            ellipses(300, 670,"Abort",275,675);
+            sets("Kmax reached so Frame is aborted")
+
+        }
+        else if(localStorage.clickcount==30)
+        {
+            //lines(x1,y1,x2,y2)
+            lines(300,580,300,180);
+            var canvas = document.getElementById("GFG");
+            ctx = canvas.getContext('2d');
+            ctx.font = "16px Arial";
+            ctx.fillText("No", 305, 575);
+            lines(300,180,520,180);
+        }
+        else if(localStorage.clickcount==31)
+        {
+            clr()
+            var canvas = document.getElementById("GFG");
+            ctx = canvas.getContext('2d');
+            ctx.clearRect(0,35, 750, 650);
+            ctx.beginPath();
+            ctx.fillStyle = "lightblue";
+            ctx.strokeStyle='lightblue';
+            ctx.rect(0,35, 750, 650);
+            ctx.stroke();
+            ctx.fill();
+                        ctx.beginPath();
+            ctx.fillStyle = "lightblue";
+            ctx.strokeStyle='lightblue';
+            ctx.rect(550,0,100,100);
+            ctx.stroke();
+            ctx.fill();
+            localStorage.clickcount=0;
+        }
+        
+    }
+
+    function abc(){
+
+        var doc_id = document.getElementById("GFG"); 
+        var context = doc_id.getContext("2d"); 
+        const img = new Image()
+        img.src = "11.jpg"
+        img.onload = () => {
+        context.drawImage(img, 600,0)
+    } 
+    }
+    function lines(x1,y1,x2,y2){
+        var doc_id = document.getElementById("GFG"); 
+        var context = doc_id.getContext("2d"); 
+        context.beginPath(); 
+        context.moveTo(x1,y1); 
+        context.strokeStyle = 'green'; 
+        context.lineTo(x2,y2); 
+        context.stroke(); 
+
+    }
+
+    function ellipses(x,y,txt,tx,ty)
+    {
+        var canvas = document.getElementById("GFG");
+        ctx = canvas.getContext('2d');
+
+        
+        ctx.beginPath();
+        ctx.fillStyle = "yellow";
+        ctx.strokeStyle='black';
+        ctx.font = "16px Arial";
+        ctx.lineWidth = 4;
+        ctx.ellipse(x,y, 15,50, Math.PI/2, 0, 2 * Math.PI);
+        ctx.stroke();
+        ctx.fill();
+        ctx.beginPath();
+        ctx.fillStyle = "black";
+        ctx.fillText(txt,tx,ty);
+        ctx.fill();
+    }
+    function change()
+    {
+        var canvas = document.getElementById("GFG");
+        ctx = canvas.getContext('2d');
+        ctx.font = "30px Arial";
+        ctx.fillText("Hello World", 10, 50);
+    }
+    function rect(x,y,w,h,txt,tx,ty)
+    {
+        var c = document.getElementById("GFG");
+        var ctx = c.getContext("2d");
+        ctx.beginPath();
+        ctx.fillStyle = "orange";
+        ctx.strokeStyle='black';
+        ctx.font = "16px Arial";
+        ctx.lineWidth = 4;
+        ctx.rect(x,y, w, h);
+        ctx.stroke();
+        ctx.fill();
+        ctx.beginPath();
+        ctx.fillStyle = "black";
+        ctx.fillText(txt,tx,ty);
+        ctx.fill();
+    }
+    function rect2(x,y,w,h,txt1,txt2,tx1,ty1,tx2,ty2)
+    {
+        var c = document.getElementById("GFG");
+        var ctx = c.getContext("2d");
+        ctx.beginPath();
+        ctx.fillStyle = "orange";
+        ctx.strokeStyle='black';
+        ctx.font = "16px Arial";
+        ctx.lineWidth = 4;
+        ctx.rect(x,y, w, h);
+        ctx.stroke();
+        ctx.fill();
+        ctx.beginPath();
+        ctx.fillStyle = "black";
+        ctx.fillText(txt1,tx1,ty1);
+        ctx.fillText(txt2,tx2,ty2);
+        ctx.fill();
+    }
+    function rhombus(x1,y1,x2,y2,x3,y3,x4,y4,txt1,txt2,tx1,ty1,tx2,ty2)
+    {
+        var c = document.getElementById("GFG");
+        var ctx = c.getContext('2d');
+        ctx.beginPath();
+        ctx.fillStyle = '#51FF0D';
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2,y2);
+        ctx.lineTo(x3,y3);
+        ctx.lineTo(x4,y4);
+        ctx.closePath();
+        ctx.fill();
+        ctx.beginPath();
+        ctx.fillStyle = "black";
+        ctx.font = "16px Arial";
+        ctx.fillText(txt1,tx1,ty1);
+        ctx.fillText(txt2,tx2,ty2);
+        ctx.fill();
+    }
+    
+    </script>
+    
+</head>
+<body onload="load()">
+    <canvas id="GFG" width="1536" height="688"></canvas> 
+    <form style="background-color: lightblue">
+    <input type="button" name="start" value="Start/Next" onclick="clickCounter()" style="text-align: center;padding: 8px 32px;font-size: 16px;margin-left: 500px">
+  </form>
+</body>
+</html>

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nonpersistent</title>
+    <script type="text/javascript">
+    //ellipses  ellipse
+    //lines  line
+    //rect  Rectangle 
+    //rect2 rectangle 2 lines
+
+    function load()
+        {
+            localStorage.clickcount=0;
+        var c = document.getElementById("GFG");
+        var ctx = c.getContext("2d");
+
+
+
+        ctx.beginPath();
+        ctx.fillStyle = "lightblue";
+        ctx.strokeStyle='lightblue';
+        ctx.lineWidth = 4;
+        ctx.rect(0,0, 1536, 700);
+        ctx.stroke();
+        ctx.fill();
+        ctx.beginPath();
+        ctx.fillStyle = "yellow";
+        ctx.fillText("aa",900,200);
+        ctx.fill();
+
+        ctx.beginPath(); 
+        ctx.moveTo(800,0); 
+        ctx.strokeStyle = 'darkgreen'; 
+        ctx.lineWidth=7;
+        ctx.lineTo(800,700); 
+        ctx.stroke();
+
+        ctx.beginPath(); 
+        ctx.moveTo(800,270); 
+        ctx.strokeStyle = 'darkgreen'; 
+        ctx.lineWidth=7;
+        ctx.lineTo(1535,270); 
+        ctx.stroke();
+
+
+        ctx.beginPath();
+        ctx.fillStyle = "blue";
+        ctx.strokeStyle='blue';
+        ctx.font = "25px Arial";
+        ctx.lineWidth = 4;
+        ctx.rect(820,10, 700, 240);
+        ctx.stroke();
+        ctx.fill();
+        ctx.beginPath();
+        ctx.fillStyle = "yellow";
+        
+ 
+  /*However, */
+//it waits a random amount of time and then senses the line again.
+ // because
+        ctx.fillText("In the nonpersistent method, a station that has a frame to",830,30);
+        ctx.fillText("send senses the line. ",830,60);
+        ctx.fillText("If the line is idle, it sends immediately. If the line is not idle, ",830,90);
+        ctx.fillText(" it waits a random amount of time and senses line again.",830,120);
+        ctx.fillText("The nonpersistent approach reduces the chance of collision",830,150);
+        ctx.fillText("This method reduces the efficiency of the network because ",830,180);
+        ctx.fillText("the medium remains idle when there may be stations with",830,210)
+        ctx.fillText("frames to send.",830,240)
+
+         ctx.fill();
+        ctx.font = "40px Arial";
+        ctx.fillStyle = "orange"
+        ctx.fillText("CSMA Methods", 200, 47);
+        ctx.font = "30px Arial";
+        ctx.fillStyle = "green"
+        ctx.fillText("Procedure for Non Persistent Method", 150, 77);
+
+        /*ctx.beginPath();
+        ctx.fillStyle = "blue";
+        ctx.strokeStyle='blue';
+        ctx.font = "15px Arial";
+        ctx.lineWidth = 4;
+        ctx.rect(810,280, 715, 380);
+        ctx.stroke();
+        ctx.fill();*/
+        }
+    function clr()
+    {
+            var canvas = document.getElementById("GFG");
+            ctx = canvas.getContext('2d');
+            ctx.clearRect(810,280, 715, 380);
+            ctx.beginPath();
+            ctx.fillStyle = "lightblue";
+            ctx.strokeStyle='lightblue';
+            ctx.rect(810,280, 715, 380);
+            ctx.stroke();
+            ctx.fill();
+    }
+    function sets(txx)
+    {
+            var canvas = document.getElementById("GFG");
+            ctx = canvas.getContext('2d');
+            ctx.font = "30px Arial";
+            ctx.fillStyle="green"
+            ctx.rect(810,280, 715, 380);
+            ctx.fillText(txx, 900, 450);
+    }
+    function seti(ix,iy,iname)
+    {
+            var doc_id = document.getElementById("GFG"); 
+            var context = doc_id.getContext("2d");
+            const img = new Image()
+            img.src = iname
+            img.onload = () => {
+            context.drawImage(img, ix,iy)
+        }
+    }
+    function clickCounter() 
+    {
+        if(typeof(Storage) !== "undefined") 
+        {
+            if (localStorage.clickcount) 
+            {
+                localStorage.clickcount = Number(localStorage.clickcount)+1;
+            }
+            else 
+            {
+                localStorage.clickcount = 1;
+            }
+          /*  document.getElementById("result").value = localStorage.clickcount ;
+        } 
+        else {
+                document.getElementById("result").value = 0;
+                }*/
+        
+        }
+        if(localStorage.clickcount==1)
+        {
+            //ellipses(x,y,txt,tx,ty)
+            clr()
+            ellipses(350, 150,"Start",320,157);
+            sets("Station has a frame to send")
+
+        }
+        else if(localStorage.clickcount==2)
+        {
+            clr()
+            //lines(x1,y1,x2,y2)
+            lines(350,190,350,240);
+            
+        }
+        else if(localStorage.clickcount==3)
+        {
+            clr()
+            //rhombus(x1,y1,x2,y2,x3,y3,x4,y4,txt1,txt2,tx1,ty1,tx2,ty2)
+            rhombus(350,240,500,300,350,360,200,300,"Channel?","",300,300,310,300);
+            sets("Check either ACK Received or not?")
+
+        }
+        else if(localStorage.clickcount==4)
+        {
+            lines(500,300,575,300)
+
+			var canvas = document.getElementById("GFG");
+            ctx = canvas.getContext('2d');
+            ctx.font = "30px Arial";
+            ctx.fillText("Busy", 500, 290)
+            
+
+        }
+        else if(localStorage.clickcount==5)
+        {
+            clr()
+            rect2(575,250,150,100,"Wait","Randomly",620,280,585,320);
+            sets("Wait for Random time to transmit frame")
+        }
+        else if(localStorage.clickcount==6)
+        {
+
+            lines(725,300,750,300)
+            lines(750,300,750,220)
+            lines(750,220,350,220)
+        }
+        else if(localStorage.clickcount==7)
+        {
+            lines(350,360,350,460)
+			var canvas = document.getElementById("GFG");
+            ctx = canvas.getContext('2d');
+            ctx.font = "30px Arial";
+            ctx.fillText("Idle", 360,400)
+            
+
+        }
+        else if(localStorage.clickcount==8)
+        {
+        	clr()
+            ellipses(350, 460,"Success",300,467);
+            sets("Station can Transmit")
+        }
+       
+
+        else if(localStorage.clickcount==9)
+        {
+            clr()
+            var canvas = document.getElementById("GFG");
+            ctx = canvas.getContext('2d');
+            ctx.clearRect(0,100, 750, 650);
+            ctx.beginPath();
+            ctx.fillStyle = "lightblue";
+            ctx.strokeStyle='lightblue';
+            ctx.rect(0,100, 750, 650);
+            ctx.stroke()
+            ctx.fill();
+                        localStorage.clickcount=0;
+
+            //change() 
+            //abc()
+        }
+
+    }
+
+    function abc(){
+
+        var doc_id = document.getElementById("GFG"); 
+        var context = doc_id.getContext("2d"); 
+        const img = new Image()
+        img.src = "b.gif"
+        img.onload = () => {
+        context.drawImage(img, 600,0)
+    } 
+    }
+    function lines(x1,y1,x2,y2){
+        var doc_id = document.getElementById("GFG"); 
+        var context = doc_id.getContext("2d"); 
+        context.beginPath(); 
+        context.moveTo(x1,y1); 
+        context.strokeStyle = 'green'; 
+        context.lineTo(x2,y2); 
+        context.stroke(); 
+
+    }
+
+    function ellipses(x,y,txt,tx,ty)
+    {
+        var canvas = document.getElementById("GFG");
+        ctx = canvas.getContext('2d');
+
+        
+        ctx.beginPath();
+        ctx.fillStyle = "yellow";
+        ctx.strokeStyle='black';
+        ctx.font = "30px Arial";
+        ctx.lineWidth = 4;
+        ctx.ellipse(x,y, 40,80, Math.PI/2, 0, 2 * Math.PI);
+        ctx.stroke();
+        ctx.fill();
+        ctx.beginPath();
+        ctx.fillStyle = "black";
+        ctx.fillText(txt,tx,ty);
+        ctx.fill();
+    }
+    function change()
+    {
+        var canvas = document.getElementById("GFG");
+        ctx = canvas.getContext('2d');
+        ctx.font = "30px Arial";
+        ctx.fillText("Hello World", 10, 50);
+    }
+    function rect(x,y,w,h,txt,tx,ty)
+    {
+        var c = document.getElementById("GFG");
+        var ctx = c.getContext("2d");
+        ctx.beginPath();
+        ctx.fillStyle = "orange";
+        ctx.strokeStyle='black';
+        ctx.font = "30px Arial";
+        ctx.lineWidth = 4;
+        ctx.rect(x,y, w, h);
+        ctx.stroke();
+        ctx.fill();
+        ctx.beginPath();
+        ctx.fillStyle = "black";
+        ctx.fillText(txt,tx,ty);
+        ctx.fill();
+    }
+    function rect2(x,y,w,h,txt1,txt2,tx1,ty1,tx2,ty2)
+    {
+        var c = document.getElementById("GFG");
+        var ctx = c.getContext("2d");
+        ctx.beginPath();
+        ctx.fillStyle = "orange";
+        ctx.strokeStyle='black';
+        ctx.font = "30px Arial";
+        ctx.lineWidth = 4;
+        ctx.rect(x,y, w, h);
+        ctx.stroke();
+        ctx.fill();
+        ctx.beginPath();
+        ctx.fillStyle = "black";
+        ctx.fillText(txt1,tx1,ty1);
+        ctx.fillText(txt2,tx2,ty2);
+        ctx.fill();
+    }
+    function rhombus(x1,y1,x2,y2,x3,y3,x4,y4,txt1,txt2,tx1,ty1,tx2,ty2)
+    {
+        var c = document.getElementById("GFG");
+        var ctx = c.getContext('2d');
+        ctx.beginPath();
+        ctx.fillStyle = '#51FF0D';
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2,y2);
+        ctx.lineTo(x3,y3);
+        ctx.lineTo(x4,y4);
+        ctx.closePath();
+        ctx.fill();
+        ctx.beginPath();
+        ctx.font = "30px Arial";
+        ctx.fillStyle = "black";
+        ctx.fillText(txt1,tx1,ty1);
+        ctx.fillText(txt2,tx2,ty2);
+        ctx.fill();
+    }
+    
+    </script>
+    
+</head>
+<body onload="load()">
+    <canvas id="GFG" width="1536" height="670"></canvas> 
+        <form style="background-color: lightblue">
+    <input type="button" name="start" value="Start/Next" onclick="clickCounter()" style="text-align: center;padding: 15px 32px;font-size: 16px;margin-left: 500px">
+  </form>
+
+</body>
+</html>

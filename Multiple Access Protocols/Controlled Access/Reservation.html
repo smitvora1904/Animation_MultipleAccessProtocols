@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Reservation Protocol</title>
+	<style type="text/css">
+		.column {
+  	float: left;
+  	width: 16%;
+  	padding: 2px;
+	}
+
+	.row::after {
+  		content: "";
+  		clear: both;
+  		display: inline-block;
+  }
+
+  #animate1 {
+    width: 50px;
+    height: 10px;
+    position: absolute;
+    background-color: blue;
+    padding: 5px;
+	}
+
+  </style>
+
+	<script type="text/javascript">
+
+
+		function startProcess()
+		{
+
+      var doc_id = document.getElementById("verticle"); 
+      var ctx = doc_id.getContext("2d");
+      ctx.clearRect(0, 0, 1000, 300);
+
+      ctx.fillStyle = "black";
+      ctx.font = "30px Georgia";
+      ctx.fillText("1",800,90);
+      ctx.fillText("2",770,90);
+      ctx.fillText("3",740,90);
+      ctx.fillText("4",710,90);
+      ctx.fillStyle = "green";
+      ctx.fillText("Reservation Frame",700,190);
+      ctx.fillStyle = "red";
+      ctx.fillText("The bit stream move LEFT to RIGHT.",10,50);      
+
+			var chk1 = document.getElementById("s1");
+			var chk2 = document.getElementById("s2");
+			var chk3 = document.getElementById("s3");
+      var chk4 = document.getElementById("s4");
+      
+      var data=[];			
+
+			if(chk4.checked == true)
+			{
+        data.push("4");
+        mkBlock(710,100,30,50,"1","green");
+			}
+      else
+      {
+        mkBlock(710,100,30,50,"0","green"); 
+      }
+
+			if(chk3.checked == true)
+			{
+        data.push("3");
+        mkBlock(740,100,30,50,"1","green"); 	
+			}
+      else
+      {
+        mkBlock(740,100,30,50,"0","green");
+      }
+
+			if(chk2.checked == true)
+			{
+        data.push("2");
+        mkBlock(770,100,30,50,"1","green");
+			}
+      else
+      {
+        mkBlock(770,100,30,50,"0","green");
+      }
+
+      if(chk1.checked == true)
+      {
+        data.push("1");
+        mkBlock(800,100,30,50,"1","green");
+		  }
+      else
+      {
+        mkBlock(800,100,30,50,"0","green");
+      }
+
+      if(data.length > 0)
+      {
+        var dtx = 580;
+        for (var i = 0; i < data.length; i++) 
+        {
+          //console.log(data[i]);  
+          mkDBlock(dtx,100,120,50,"DATA "+data[i],"blue");
+          dtx -= 130;
+        }
+        ctx.font = "30px Georgia";
+        ctx.fillStyle = "blue";
+        ctx.fillText("Data Frame(s)",300,190); 
+      }
+      else
+      {
+        //console.log("No reservation!!");
+        ctx.font = "30px Georgia";
+        ctx.fillStyle = "blue";
+        ctx.fillText("No Data Frame",300,190);
+      }
+
+  }
+    function mkBlock(rectX,rectY,rectWidth,rectHeight,txt,color) {
+ 
+      var doc_id = document.getElementById("verticle"); 
+      var ctx = doc_id.getContext("2d");
+
+          ctx.beginPath();
+          ctx.lineWidth = 3;
+          ctx.moveTo(rectX, rectY); 
+          ctx.strokeStyle = color;
+          ctx.rect(rectX, rectY, rectWidth, rectHeight);
+          ctx.stroke();
+          ctx.fillStyle = "black";
+          ctx.font = "25px Arial";
+          ctx.fillText(txt,parseInt(rectX-7 +(parseInt(rectWidth)/2)), parseInt(rectY+7+(parseInt(rectHeight)/2)));
+      }
+
+    function mkDBlock(rectX,rectY,rectWidth,rectHeight,txt,color) {
+ 
+      var doc_id = document.getElementById("verticle"); 
+      var ctx = doc_id.getContext("2d");
+
+          ctx.beginPath();
+          ctx.lineWidth = 3;
+          ctx.moveTo(rectX, rectY); 
+          ctx.strokeStyle = color;
+          ctx.rect(rectX, rectY, rectWidth, rectHeight);
+          ctx.stroke();
+          ctx.fillStyle = "black";
+          ctx.font = "25px Arial";
+          ctx.fillText(txt,parseInt(rectX-40 +(parseInt(rectWidth)/2)), parseInt(rectY+7+(parseInt(rectHeight)/2)));
+      }
+    
+
+	</script>
+
+</head>
+<body style="background-color: skyblue;">
+  <header style="padding: 1px; text-align: center;font-family: monospace; font-size: 32px; background-color: rgb(0,255,0); ">Reservation Protocol</header>
+  <table style="text-align: left;">
+    <tr>
+      <th colspan="6" rowspan="1">
+        <div style="width: 1000px">
+        <p style="color: red;font-family: sans-serif;font-size: 20px;">HOW TO USE Simulator?</p>
+        <p style="font-family: sans-serif;font-size: 20px;">SELECT NODES FROM WHICH YOU WANT TO SEND DATA, USING THE "CHECKBOX".</p>
+        </div>
+      </th>
+      <th rowspan="3" colspan="1">
+        <div style="height: 230px; padding: 1px;font-size: 16px;font-family: serif;">
+          <ul>
+            <li>RESERVATION FRAME: This frame is N(N = number of nodes in system) slots long.</li><br>
+            <li>The Reservation frame keeps moving in channel with certain time interval.</li><br>
+            <li>The Node who wants to send data can reserve its spot by making corresponding reservation slot bit 0 to 1.</li><br>
+            <li>The data frames of each system who reserved is placed after reservation frame; in queue.</li><br>
+          </ul>
+        </div>
+      </th>
+    </tr>
+
+
+    <tr>
+      <td>
+  <div class="column" >
+    <form>
+      <p style="font-size: 20px;">System-1:<input type="checkbox" id="s1" name="s1" value="System-1" style="height: 20px; width: 20px;">
+        </p>
+    </form>
+  </div>
+  <div class="column">
+    <form>
+      <p style="font-size: 20px;">System-2:<input type="checkbox" id="s2" name="s2" value="System-2" style="height: 20px; width: 20px;">
+      </p>
+    </form>
+  </div>
+  <div class="column">
+    <form>
+      <p style="font-size: 20px;">System-3:<input type="checkbox" id="s3" name="s3" value="System-3" style="height: 20px; width: 20px;">
+      </p>
+    </form>
+  </div>
+  <div class="column">
+    <form>
+      <p style="font-size: 20px;">System-4:<input type="checkbox" id="s4" name="s4" value="System-4" style="height: 20px; width: 20px;">
+      </p>
+    </form>
+  </div>
+  
+  </td>
+    </tr>
+
+    <tr>
+      <td>
+  
+  <div class="column">
+    <img src="secondary.png" alt="Scondary" style="width:50%">
+  </div>
+  <div class="column">
+    <img src="secondary.png" alt="Secondary" style="width:50%">
+  </div>
+  <div class="column">
+    <img src="secondary.png" alt="Secondary" style="width:50%">
+  </div>
+  <div class="column">
+    <img src="secondary.png" alt="Secondary" style="width:50%">
+  </div>
+  <div>
+    <form>
+    <input type="button" name="show" value="Show" onclick="startProcess()" style="text-align: center;padding: 15px 32px;font-size: 16px;">
+  </form>
+  </div>
+</td>
+    </tr>
+  </table>
+
+  <canvas id = "horizontal" width="1000" height="50">
+  </canvas>
+  <script type="text/javascript">
+    var horiz_id = document.getElementById("horizontal"); 
+    var ctx = horiz_id.getContext("2d"); 
+    ctx.beginPath(); 
+    ctx.moveTo(0,40); 
+    ctx.strokeStyle = 'black';
+    ctx.lineWidth = 5; 
+    ctx.lineTo(700,40); 
+    ctx.stroke();
+
+    ctx.moveTo(40,0);
+    ctx.lineTo(40,40); 
+    ctx.stroke();
+
+    ctx.moveTo(200,0);
+    ctx.lineTo(200,40); 
+    ctx.stroke();
+
+    ctx.moveTo(350,0);
+    ctx.lineTo(350,40); 
+    ctx.stroke();
+
+    ctx.moveTo(530,0);
+    ctx.lineTo(530,40); 
+    ctx.stroke();
+  </script>
+	<canvas id="verticle" width="1000" height="300"> 
+    </canvas> <br><br>
+
+</body>
+</html>

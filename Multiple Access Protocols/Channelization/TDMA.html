@@ -1,0 +1,833 @@
+<!DOCTYPE HTML>
+<html>
+<head>  
+<title>TDMA</title>
+<link rel="stylesheet" type="text/css" href="buttoncss.css">
+<style type="text/css">
+
+    html, body, #container {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+  }
+
+
+#col{
+     width: 25%;
+     float: left;
+  }
+  #col1{
+     width: 50%;
+     float: left;
+
+     }
+
+
+   /*For Station*/
+     .box {
+  margin-left: 200px;
+  display:flex;
+  width:150px;
+  height:50px;
+  perspective: 150px;
+  font-size:20px;
+  line-height:50px;
+  color:black;
+  text-align:center;
+  font-family:arial;
+  position:relative;
+  
+}
+.box > div:first-child {
+  width:60%;
+  background:linear-gradient(to right,blue,lightblue);
+  transform: rotateY(-30deg) skewY(9deg);
+    transform-origin: right;
+    
+}
+.box > div:last-child {
+  width:40%;
+  background:linear-gradient(to right,lightblue,blue);
+  border-left:1px solid blue;
+  transform-origin: left;
+    transform: rotateY(30deg) skewY(-9deg);
+}
+
+.box:before {
+    content: "";
+    position: absolute;
+    top: -13px;
+    width: 41%;
+    left: 25px;
+    height: 8px;
+    background: linear-gradient(to right,lightblue,blue);
+    transform: rotate(4.6deg) skewX(-80deg);
+    transform-origin: left bottom;
+}
+
+
+
+   .box1 {
+  margin-left: 0px;
+  margin-top: 20px;
+  display:flex;
+  width:150px;
+  height:50px;
+  perspective: 150px;
+  font-size:20px;
+  line-height:50px;
+  color:black;
+  text-align:center;
+  font-family:arial;
+  position:relative;
+  
+}
+.box1 > div:first-child {
+  width:60%;
+  background:linear-gradient(to right,blue,lightblue);
+  transform: rotateY(-30deg) skewY(9deg);
+    transform-origin: right;
+    
+}
+.box1 > div:last-child {
+  width:40%;
+  background:linear-gradient(to right,lightblue,blue);
+  border-left:1px solid blue;
+  transform-origin: left;
+    transform: rotateY(30deg) skewY(-9deg);
+}
+
+.box1:before {
+    content: "";
+    position: absolute;
+    top: -13px;
+    width: 41%;
+    left: 25px;
+    height: 8px;
+    background: linear-gradient(to right,lightblue,blue);
+    transform: rotate(4.6deg) skewX(-80deg);
+    transform-origin: left bottom;
+}
+
+
+
+
+   /*For Station*/
+
+#headstyle{
+   text-align: center; 
+
+   background: linear-gradient(to right, blue, black);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+}
+
+
+#background{
+   background-image: linear-gradient(to top,#99D9EA 0%,white 50%,#99D9EA 100%);
+}
+
+
+/*For movable shape*/
+
+
+#animate1 {
+  width: 10px;
+  height: 50px;
+  position: absolute;
+  background-color: blue;
+  margin-top: 15px;
+}
+#animate2 {
+  width: 10px;
+  height: 50px;
+  position: absolute;
+  background-color: blue;
+  margin-top: 135px;
+}
+#animate3 {
+  width: 10px;
+  height: 50px;
+  position: absolute;
+  background-color: blue;
+  margin-top: 255px;
+}
+#animate4 {
+  width: 10px;
+  height: 50px;
+  position: absolute;
+  background-color: blue;
+  margin-top: 375px;
+}
+
+
+
+
+
+
+
+/*For movable shape*/
+
+
+
+
+
+
+
+</style>
+
+  <!--<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>-->
+
+<script>
+
+function convert(num) {
+  var output = "";
+  var input = num.value;
+  
+
+  for (var i = 0; i < input.length; i++) {
+      output += input[i].charCodeAt(0).toString(2) + " ";
+  }
+  return output;
+}
+
+function converttochar(str){
+
+   if(str!="")
+   {
+   str = str.replace(/\s+/g, '');
+    // Pretty (correct) print binary (add a space every 8 characters)
+    str = str.match(/.{0,7}/g).join(" ");
+
+    var newBinary = str.split(" ");
+    var binaryCode = [];
+
+    for (i = 0; i < newBinary.length-1; i++) {
+        binaryCode.push(String.fromCharCode(parseInt(newBinary[i], 2)));
+    }
+    
+    return binaryCode.join("");
+ }
+ else{
+   return str;
+ }
+}
+
+
+function load(){
+   localStorage.clickcount=0;
+}
+
+function clickCounter() {
+  if (typeof(Storage) !== "undefined") {
+    if (localStorage.clickcount) {
+      localStorage.clickcount = Number(localStorage.clickcount)+1;
+    } else {
+      localStorage.clickcount = 1;
+    }
+    document.getElementById("result").value = localStorage.clickcount ;
+  } else {
+    document.getElementById("result").value = 0;
+  }
+
+  
+  if(localStorage.clickcount==1)
+  {
+   senderside()
+  }
+  else if(localStorage.clickcount==2)
+  {
+   datainchannel()
+  }
+  else if(localStorage.clickcount==3){
+   recoverdatainbinary()
+  
+   }
+   else if(localStorage.clickcount==4)
+   {
+   recoverdata();
+   }
+   else if(localStorage.clickcount==5){
+    location.reload();
+    localStorage.clickcount=0
+   }
+}
+
+
+
+
+function senderside(){
+   var num1=convert(document.getElementById('num1'));
+   var num2=convert(document.getElementById('num2'));
+   var num3=convert(document.getElementById('num3'));
+   var num4=convert(document.getElementById('num4'));
+   document.getElementById('num1').disabled=true;
+   document.getElementById('num2').disabled=true;
+   document.getElementById('num3').disabled=true;
+   document.getElementById('num4').disabled=true;
+
+   document.getElementById('binu1').value=num1;
+   document.getElementById('binu2').value=num2;
+   document.getElementById('binu3').value=num3;
+   document.getElementById('binu4').value=num4;
+   arr=['user1','user2','user3','user4'];
+
+  
+
+
+   var chart = new CanvasJS.Chart(arr[0],
+    {
+      animationEnabled: true,
+      backgroundColor: "",
+      axisY:{
+       title: "Amplitude",
+       tickLength: 5
+      },
+      axisX:{
+       title: "Time",
+       tickLength: 5
+      },
+      data: [
+      {
+
+        type: "column",
+       
+        dataPoints: [
+        { y: 8,label: "User1T",indexLabel: num1,indexLabelFontColor: "black", indexLabelOrientation: "vertical", indexLabelPlacement: "inside"},
+        { y: 0, label: "User2T"},
+        { y: 0, label: "User3T"},
+        { y: 0, label: "User4T"}  
+        ]
+      }
+      ]
+    });
+
+chart.render();
+
+   var chart = new CanvasJS.Chart(arr[1],
+    {
+      animationEnabled: true,
+      backgroundColor: "",
+      axisY:{
+       title: "Amplitude",
+       tickLength: 5
+      },
+      axisX:{
+       title: "Time",
+       tickLength: 5
+      },
+      data: [
+      {
+        type: "column",
+        dataPoints: [
+        {y: 0, label: "User1T"},
+        { y: 8, label: "User2T",indexLabel: num2,indexLabelFontColor: "black", indexLabelOrientation: "vertical", indexLabelPlacement: "inside"},
+        { y: 0, label: "User3T"},
+        { y: 0, label: "User4T"}  
+        ]
+      }
+      ]
+    });
+
+chart.render();
+
+
+   var chart = new CanvasJS.Chart(arr[2],
+    {
+      animationEnabled: true,
+      backgroundColor: "",
+      axisY:{
+       title: "Amplitude",
+       tickLength: 5
+      },
+      axisX:{
+       title: "Time",
+       tickLength: 5
+      },
+      data: [
+      {
+        type: "column",
+        dataPoints: [
+        {y: 0, label: "User1T"},
+        { y: 0, label: "User2T"},
+        { y: 8, label: "User3T",indexLabel:num3, indexLabelFontColor: "black", indexLabelOrientation: "vertical", indexLabelPlacement: "inside"},
+        { y: 0, label: "User4T"}  
+        ]
+      }
+      ]
+    });
+
+chart.render();
+
+   var chart = new CanvasJS.Chart(arr[3],
+    {
+      animationEnabled: true,
+      backgroundColor: "",
+      axisY:{
+       title: "Amplitude",
+       tickLength: 5
+      },
+      axisX:{
+       title: "Time",
+       tickLength: 5
+      },
+      data: [
+      {
+        type: "column",
+        dataPoints: [
+        { y: 0, label: "User1T"},
+        { y: 0, label: "User2T"},
+        { y: 0, label: "User3T"},
+        { y: 8, label: "User4T",indexLabel:num4, indexLabelFontColor: "black", indexLabelOrientation: "vertical", indexLabelPlacement: "inside"}  
+        ]
+      }
+      ]
+    });
+
+chart.render();   
+
+
+
+myMove(347,100,500,280,2,0);
+myMove(347,100,450,240,0.58,1);
+myMove(347,100,463,240,-0.52,2);
+myMove(347,100,476,280,-1.395,3);
+
+
+
+
+
+}
+function datainchannel(){
+
+      var num1=document.getElementById('binu1').value;
+      var num2=document.getElementById('binu2').value;
+      var num3=document.getElementById('binu3').value;
+      var num4=document.getElementById('binu4').value;
+   var chart = new CanvasJS.Chart("channeldata",
+    {
+      animationEnabled: true,
+      backgroundColor: "",
+      axisY:{
+       title: "Amplitude",
+       tickLength: 5
+      },
+      axisX:{
+       title: "Time",
+       tickLength: 5
+      },
+      data: [
+      {
+        type: "column",
+        dataPoints: [
+        {y: 8, label: "User1T",indexLabel:num1, indexLabelFontColor: "black", indexLabelOrientation: "vertical", indexLabelPlacement: "inside"},
+        { y: 8, label: "User2T",indexLabel:num2, indexLabelFontColor: "black", indexLabelOrientation: "vertical", indexLabelPlacement: "inside"},
+        { y: 8, label: "User3T",indexLabel:num3, indexLabelFontColor: "black", indexLabelOrientation: "vertical", indexLabelPlacement: "inside"},
+        { y: 8, label: "User4T",indexLabel:num4, indexLabelFontColor: "black", indexLabelOrientation: "vertical", indexLabelPlacement: "inside"}  
+        ]
+      }
+      ]
+    });
+chart.render();
+
+myMove1(437,100,810);
+
+}
+
+
+function recoverdatainbinary(){
+
+      myMove2(810,280,980,300,-1.12,0);
+      myMove2(823,160,980,300,-0.4,1);
+      myMove2(836,50,980,300,0.25,2);
+      myMove2(850,-70,980,300,0.97,3);
+
+
+
+  setTimeout(function() {
+      var num1=document.getElementById('binu1').value;
+      var num2=document.getElementById('binu2').value;
+      var num3=document.getElementById('binu3').value;
+      var num4=document.getElementById('binu4').value;
+
+   arr=['user5','user6','user7','user8'];
+
+   var chart = new CanvasJS.Chart(arr[0],
+    {
+      animationEnabled: true,
+      backgroundColor: "",
+      axisY:{
+       title: "Amplitude",
+       tickLength: 5
+      },
+      axisX:{
+       title: "Time",
+       tickLength: 5
+      },
+      data: [
+      {
+        type: "column",
+        dataPoints: [
+        {y: 8, label: "User1T",indexLabel: num1,indexLabelFontColor: "black", indexLabelOrientation: "vertical", indexLabelPlacement: "inside"},
+        { y: 0, label: "User2T"},
+        { y: 0, label: "User3T"},
+        { y: 0, label: "User4T"}  
+        ]
+      }
+      ]
+    });
+
+chart.render();
+
+   var chart = new CanvasJS.Chart(arr[1],
+    {
+      animationEnabled: true,
+      backgroundColor: "",
+      axisY:{
+       title: "Amplitude",
+       tickLength: 5
+      },
+      axisX:{
+       title: "Time",
+       tickLength: 5
+      },
+      data: [
+      {
+        type: "column",
+        dataPoints: [
+        { y: 0, label:"User1T"},
+        { y: 8, label:"User2T",indexLabel: num2,indexLabelFontColor: "black", indexLabelOrientation: "vertical", indexLabelPlacement: "inside"},
+        { y: 0, label:"User3T"},
+        { y: 0, label: "User4T"}  
+        ]
+      }
+      ]
+    });
+
+chart.render();
+
+
+   var chart = new CanvasJS.Chart(arr[2],
+    {
+      animationEnabled: true,
+      backgroundColor: "",
+      axisY:{
+       title: "Amplitude",
+       tickLength: 5
+      },
+      axisX:{
+       title: "Time",
+       tickLength: 5
+      },
+      data: [
+      {
+        type: "column",
+        dataPoints: [
+        {y: 0, label: "User1T"},
+        { y: 0, label: "User2T"},
+        { y: 8, label: "User3T",indexLabel:num3, indexLabelFontColor: "black", indexLabelOrientation: "vertical", indexLabelPlacement: "inside"},
+        { y: 0, label: "User4T"}  
+        ]
+      }
+      ]
+    });
+
+chart.render();
+
+   var chart = new CanvasJS.Chart(arr[3],
+    {
+      animationEnabled: true,
+      backgroundColor: "",
+      axisY:{
+       title: "Amplitude",
+       tickLength: 5
+      },
+      axisX:{
+       title: "Time",
+       tickLength: 5
+      },
+      data: [
+      {
+        type: "column",
+        dataPoints: [
+        {y: 0, label: "User1T"},
+        { y: 0, label: "User2T"},
+        { y: 0, label: "User3T"},
+        { y: 8, label: "User4T",indexLabel:num4, indexLabelFontColor: "black", indexLabelOrientation: "vertical", indexLabelPlacement: "inside"}  
+        ]
+      }
+      ]
+    });
+
+  chart.render();   
+
+  document.getElementById('chu1').value=converttochar(num1);
+  document.getElementById('chu2').value=converttochar(num2);
+  document.getElementById('chu3').value=converttochar(num3);
+  document.getElementById('chu4').value=converttochar(num4);
+
+
+
+
+
+
+  }, 1500*1);
+      
+    
+
+}
+function recoverdata(){
+  document.getElementById('num5').value=document.getElementById('chu1').value;
+  document.getElementById('num6').value=document.getElementById('chu2').value;  
+  document.getElementById('num7').value=document.getElementById('chu3').value;
+  document.getElementById('num8').value=document.getElementById('chu4').value;
+
+
+  /*document.getElementById('num5').disabled=true;
+  document.getElementById('num6').disabled=true;
+  document.getElementById('num7').disabled=true;
+  document.getElementById('num8').disabled=true;*/
+
+   document.getElementById('num1').disabled=false;
+   document.getElementById('num2').disabled=false;
+   document.getElementById('num3').disabled=false;
+   document.getElementById('num4').disabled=false;
+}
+
+
+
+function xyz() {
+  
+  senderside()
+   setTimeout(function() {
+        datainchannel()
+        setTimeout(function() {
+          recoverdatainbinary()
+            setTimeout(function() {
+              recoverdata()
+              setTimeout(function() {
+                location.reload();
+              },1000*5);
+            }, 1000*4);
+        }, 1000*4);
+    }, 1000*2);
+
+}
+
+
+function myMove(num,num1,num2,num3,num4,num5) {
+
+  var array=['animate1','animate2','animate3','animate4'];
+  var elem = document.getElementById(array[parseInt(num5)]);   
+  var pos = parseInt(num);
+  var pos1=parseInt(num1);
+  var id = setInterval(frame, 10);
+  function frame() {
+    if (pos == parseInt(num2) || pos1==parseInt(num3)) {
+      clearInterval(id);
+    } else {
+      pos++;
+      pos1=pos1+parseFloat(num4);
+      elem.style.top = pos1 + "px"; 
+      elem.style.left =pos + "px"; 
+    }
+
+  }
+
+  
+}
+
+
+function myMove1(num,num1,num2) {
+
+  var elem1 = document.getElementById('animate1');
+  var elem2 = document.getElementById('animate2');
+  var elem3 = document.getElementById('animate3');   
+  var elem4 = document.getElementById('animate4');
+  var pos = parseInt(num);
+
+  var id = setInterval(frame, 10);
+  function frame() {
+    
+    if (pos == parseInt(num2) ) {
+      clearInterval(id);
+    } else {
+      pos++;
+      /*elem1.top=parseInt(num1)+"px";
+      elem2.top=parseInt(num2)+"px";
+      elem3.top=parseInt(num3)+"px";
+      elem4.top=parseInt(num4)+"px";*/
+
+      elem1.style.left =pos + "px"; 
+      elem2.style.left =((parseInt(pos)+13).toString()) + "px"; 
+      elem3.style.left =((parseInt(pos)+26).toString()) + "px"; 
+      elem4.style.left =((parseInt(pos)+40).toString()) + "px"; 
+    }
+
+  }
+ 
+ 
+}
+
+
+function myMove2(num,num1,num2,num3,num4,num5) {
+
+  var array=['animate1','animate2','animate3','animate4'];
+  var elem = document.getElementById(array[parseInt(num5)]);   
+  var pos = parseInt(num);
+  var pos1=parseInt(num1);
+  var id = setInterval(frame, 10);
+  function frame() {
+    if (pos == parseInt(num2) || pos1==parseInt(num3)) {
+      clearInterval(id);
+    } else {
+      pos++;
+      pos1=pos1+parseFloat(num4);
+      elem.style.top = pos1 + "px"; 
+      elem.style.left =pos + "px"; 
+    }
+
+  }
+  
+}
+
+
+
+
+
+
+</script>
+</head>
+<body>
+<!--<div id="chartContainer" style="height: 200px; width: 200px;"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+<div id="container" style="height: 200px; width: 200px;"></div>
+-->
+
+
+
+
+   
+   <script src="canvasjs.min.js"></script>
+<body onload="load()" id="background">
+   <h1 id="headstyle">TIME DIVISION MULTIPLE ACCESS</h1>
+<div style="padding: 10px">
+   <div id="col">
+      
+      <div >
+        <b style="color: blue; font-size: 15px"> Enter Data </b><input type="text" name="num1" value="A" size="5" id="num1" style="font-size: 14px;">
+          <div class="box" style="float: left">
+            <div>Station:1</div>
+            <div>ICT</div>
+         </div>
+         <div id="user1" style="height: 100px; width: 200px;"></div>
+      </div>
+      <div >
+      
+         <b style="color: blue; font-size: 15px">Enter Data </b><input type="text" name="num2" value="B"size="5" id="num2" style="font-size: 14px;">
+          <div class="box" style="float: left">
+            <div>Station:2</div>
+            <div>ICT</div>
+         </div>
+         <div id="user2" style="height: 100px; width: 200px;"></div>
+      </div>
+      <div >
+      
+         <b style="color: blue; font-size: 15px">Enter Data </b><input type="text" name="num3" value="C" size="5" id="num3" style="font-size: 14px;">
+          <div class="box" style="float: left">
+            <div>Station:3</div>
+            <div>ICT</div>
+         </div>
+         <div id="user3" style="height: 100px; width: 200px;"></div>
+      </div>
+      <div >
+      
+         <b style="color: blue; font-size: 15px">Enter Data </b><input type="text" name="num4" value="D" size="5" id="num4" style="font-size: 14px;">
+          <div class="box" style="float: left">
+            <div>Station:4</div>
+            <div>ICT</div>
+         </div>
+         <div id="user4" style="height: 100px; width: 200px;"></div>
+         <br>
+         
+
+      </div>
+   </div>
+
+  
+   
+   
+   <div id="col1">
+       <div id ="animate1" style="margin-top: 15px"></div>
+      <div id ="animate2" style="margin-top: 135px"></div>
+      <div id ="animate3" style="margin-top: 255px"></div>
+      <div id ="animate4" style="margin-top: 375px"></div>
+      <div style="padding-left: 150px;">
+         <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+         <div id="channeldata" style="height: 100px; width: 200px;"></div>
+      </div>
+       <br><br><br>
+      
+      <div style="text-align: center;">
+      <!--<input type="button" value="Next" class="animated-button1"  onclick="clickCounter()"  style="font-size: 20px; padding: 10px; padding-left: 40px; padding-right: 40px">
+         <input type="button" value="Run" class="animated-button1" onclick="xyz()" style="font-size: 20px; padding: 10px; padding-left: 40px; padding-right: 40px">-->
+         <a class="animated-button1" onclick="clickCounter()" style="font-size: 20px; padding: 10px; padding-left: 40px; padding-right: 40px">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+         Next</a>
+         <a class="animated-button1" onclick="xyz()" style="font-size: 20px; padding: 10px; padding-left: 40px; padding-right: 40px">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+         Run</a>
+      </div>
+   </div>
+
+  <div id="col" >
+      
+      <div>
+         <div class="box1" style="float: left;">
+            <div>Station:5</div>
+            <div>ICT</div>
+         </div>
+         <b style="color: blue; font-size: 15px">Recovered Data </b><input type="text" name="num5" value="" id="num5" size="5" style="font-size: 14px;">
+         <div id="user5" style="height: 100px; width: 200px; margin-left: 150px; "></div>
+         <div class="box1" style="float: left">
+            <div>Station:6</div>
+            <div>ICT</div>
+         </div>
+         <b style="color: blue; font-size: 15px">Recovered Data </b><input type="text" name="num6" value="" id="num6" size="5" style="font-size: 14px;">
+         <div id="user6" style="height: 100px; width: 200px;margin-left: 150px ; "></div>
+         <div class="box1" style="float: left">
+            <div>Station:7</div>
+            <div>ICT</div>
+         </div>
+          <b style="color: blue; font-size: 15px">Recovered Data </b><input type="text" name="num7" value="" id="num7" size="5" style="font-size: 14px;">
+         <div id="user7" style="height: 100px; width: 200px;margin-left: 150px ; "></div>
+         <div class="box1" style="float: left">
+            <div>Station:8</div>
+            <div>ICT</div>
+         </div>
+         <b style="color: blue; font-size: 15px">Recovered Data </b><input type="text" name="num8" value="" id="num8" size="5" style="font-size: 14px;">
+         <div id="user8" style="height: 100px; width: 200px; margin-left: 150px ;"></div>
+      </div>
+   </div>
+   
+   <div id="result"></div>
+   <div id="chu1"></div>
+   <div id="chu2"></div>
+   <div id="chu3"></div>
+   <div id="chu4"></div>
+   <div id="binu1"></div>
+   <div id="binu2"></div>
+   <div id="binu3"></div>
+   <div id="binu4"></div>
+</div>
+</body>
+
+</html>

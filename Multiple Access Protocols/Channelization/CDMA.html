@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>CDMA</title>
+	<script src="canvasjs.min.js"></script> 
+	<link rel="stylesheet" type="text/css" href="buttoncss.css">
+	<style type="text/css">
+		
+		#headstyle{
+   			text-align: center; 
+
+   			background: linear-gradient(to right, blue, black);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+		}
+
+
+		#background{
+   			background-image: linear-gradient(to top,#99D9EA 0%,white 50%,#99D9EA 100%);
+		}
+
+
+		#col{
+     	width: 15%;
+     	float: left;
+ 	 	}
+  		#col1{
+     	width: 15%;
+     	float: left;
+
+     	}
+     	#col2{
+     	width: 40%;
+     	float: left;
+
+     	}
+
+
+     	#animate1 {
+  			width: 50px;
+  			height: 50px;
+  			position: absolute;
+  			background-color: blue;
+  			margin-top: 15px;
+		}
+		#animate2 {
+  			width: 50px;
+  			height: 50px;
+  			position: absolute;
+  			background-color: blue;
+  			margin-top: 15px;
+		}
+		#animate3 {
+  			width: 50px;
+  			height: 50px;
+  			position: absolute;
+  			background-color: blue;
+  			margin-top: 15px;
+		}
+		#animate4 {
+  			width: 50px;
+  			height: 50px;
+  			position: absolute;
+  			background-color: blue;
+  			margin-top: 15px;
+		}
+
+
+
+	</style>
+
+
+	<script type="text/javascript">
+	function codegenerator(){
+			arr1=['+1','+1','+1','+1'];
+			arr2=['+1','-1','+1','-1'];
+			arr3=['+1','+1','-1','-1'];
+			arr4=['+1','-1','-1','+1'];	
+
+			document.getElementById('code_1').value="["+arr1+"]";
+			document.getElementById('code_2').value="["+arr2+"]";
+			document.getElementById('code_3').value="["+arr3+"]";
+			document.getElementById('code_4').value="["+arr4+"]";
+
+			document.getElementById('code_5').value="["+arr1+"]";
+			document.getElementById('code_6').value="["+arr2+"]";
+			document.getElementById('code_7').value="["+arr3+"]";
+			document.getElementById('code_8').value="["+arr4+"]";
+
+			arr5=['code_1','code_2','code_3','code_4','code_5','code_6','code_7','code_8']
+			
+			for(var i=0;i<8;i++)
+			{
+				document.getElementById(arr5[i]).disabled=true;
+			}
+			localStorage.clickcount=0;
+
+		}
+
+
+		function clickCounter() {
+  		if (typeof(Storage) !== "undefined") {
+    		if (localStorage.clickcount) {
+      			localStorage.clickcount = Number(localStorage.clickcount)+1;
+    		} else {
+      			localStorage.clickcount = 1;
+    		}
+    		document.getElementById("result").value = localStorage.clickcount ;
+  		} else {
+    		document.getElementById("result").value = 0;
+  		}
+
+
+  		if(localStorage.clickcount==1)
+  		{
+  			senderside()
+  		}
+  		else if(localStorage.clickcount==2)
+  		{
+
+   			channelData()
+
+  		}
+  		else if(localStorage.clickcount==3){
+    		receiverside()
+   		}
+   		else if(localStorage.clickcount==4)
+   		{
+   			reciveddata()
+   			
+   		}
+      else if(localStorage.clickcount==5){
+        location.reload();
+        localStorage.clickcount=0
+      }
+
+  	
+  	
+  	
+  	
+}
+
+function senderside(){
+	var u1=document.getElementsByName('gender1');
+	var u2=document.getElementsByName('gender2');
+	var u3=document.getElementsByName('gender3');
+	var u4=document.getElementsByName('gender4');
+	var arr1=new Array();
+	for(var i=0;i<3;i++)
+	{
+		
+		if(u1[i].checked)
+			{arr1[0]=i-1;}
+		if(u2[i].checked)
+			{arr1[1]=i-1;}
+		if(u3[i].checked)
+			{arr1[2]=i-1;}
+		if(u4[i].checked)
+			{arr1[3]=i-1;}
+	}
+	arr2=['code_1','code_2','code_3','code_4'];
+	arr3=['data1','data2','data3','data4'];
+		for(var j=0;j<4;j++)
+		{
+			var c1=document.getElementById(arr2[j]).value;
+			c1=c1.replace("[","")
+			c1=c1.replace("]","")
+			c1=c1.split(",")
+			var c2="[";
+			
+			for(var i=0;i<4;i++)
+			{
+				var mul=parseInt(c1[i])*arr1[j];
+				if(mul>0)
+				{
+					c2=c2+"+"+mul+",";
+				}
+				else
+				{
+					c2=c2+mul+",";
+				}	
+			}
+			c2=c2+"]";
+			c2=c2.replace(',]', "]");
+			document.getElementById(arr3[j]).value=c2;
+			document.getElementById(arr3[j]).disabled=true;
+		}
+	var senderdata=new Array();
+		for(var i=0;i<4;i++)
+		{
+			senderdata[i]=document.getElementById(arr3[i]).value;
+			senderdata[i]=senderdata[i].replace("[","");
+			senderdata[i]=senderdata[i].replace("]","");
+			senderdata[i]=senderdata[i].split(",");
+		}
+
+	var graphname=['user1','user2','user3','user4'];
+	for(var i=0;i<4;i++){		
+	var chart = new CanvasJS.Chart(graphname[i], {
+  		animationEnabled: true,
+  		backgroundColor: "",
+  		axisX:{ 
+    		title: "Time",
+  		},
+  		axisY:{ 
+  		  title: "Amplitude",
+  		},
+  		data: [{
+  		  	type: "stepLine",
+     		markerSize:5,
+    		dataPoints: [
+      			{ x: 1, y: parseInt(senderdata[i][0])},
+      			{ x: 2, y: parseInt(senderdata[i][1]) },
+      			{ x: 3, y: parseInt(senderdata[i][2]) },
+      			{ x: 4, y: parseInt(senderdata[i][3]) }
+          ]
+  		}]
+	});
+	chart.render();
+	}
+	setTimeout(function() {
+	myMove(415,100,490,282,3,0);
+	myMove(415,100,490,282,1.4,1);	
+	myMove(415,100,490,282,-0.2,2);
+	myMove(415,100,490,282,-1.8,3);
+
+}, 1500*1);
+	}
+
+function channelData(){
+
+		arr1=['data1','data2','data3','data4'];
+		arr2=new Array()
+
+		for(var j=0;j<4;j++)
+		{
+		arr2[j]=document.getElementById(arr3[j]).value;
+		arr2[j]=arr2[j].replace("[","")
+		arr2[j]=arr2[j].replace("]","")
+		}
+		
+		
+
+		var str1=arr2[0].split(",");
+		var str2=arr2[1].split(",");
+		var str3=arr2[2].split(",");
+		var str4=arr2[3].split(",");
+			
+		var c2="[";
+		for(var i=0;i<4;i++)
+		{
+			var sum1=parseInt(str1[i])+parseInt(str2[i])+parseInt(str3[i])+parseInt(str4[i]);
+			if(sum1>0){		
+			c2=c2+"+"+sum1+","
+			}
+			else
+			{
+				c2=c2+sum1+",";
+			}
+
+		}
+		c2=c2+"]";
+		c2=c2.replace(",]","]");
+		document.getElementById('data_5').value=c2;
+		document.getElementById('data_5').disabled=true;
+
+		
+		myMove1(490,100,750);
+
+
+		var channel=document.getElementById('data_5').value;
+		channel=channel.replace("[","")
+		channel=channel.replace("]","")
+		channel=channel.split(",")		
+		var chart = new CanvasJS.Chart('channeldata', {
+  		animationEnabled: true,
+  		backgroundColor: "",
+  		axisX:{ 
+    		title: "Time",
+  		},
+  		axisY:{ 
+  		  title: "Amplitude",
+  		},
+  		data: [{
+  		  	type: "stepLine",
+     		markerSize:5,
+    		dataPoints: [
+      			{ x: 1, y: parseInt(channel[0])},
+      			{ x: 2, y: parseInt(channel[1]) },
+      			{ x: 3, y: parseInt(channel[2]) },
+      			{ x: 5, y: parseInt(channel[3]) }
+        	  ]
+  			}]
+		});
+		chart.render();
+	
+
+
+
+		
+
+	}
+
+
+	function receiverside(){
+		myMove2(750,325,870,300,-2,0);
+		myMove2(750,200,870,300,-0.7,1);
+		myMove2(750,85,870,300,0.5,2);
+		myMove2(750,-35,870,300,1.7,3);
+		//325	750
+		setTimeout(function() {
+		arr1=['code_5','code_6','code_7','code_8'];
+		var receivdedata=document.getElementById('data_5').value;
+		receivdedata=receivdedata.replace("[","");
+		receivdedata=receivdedata.replace("]","");
+		receivdedata=receivdedata.split(",")
+		arr2=new Array()
+		arr3=['data5','data6','data7','data8'];
+
+		for(var i=0;i<4;i++)
+		{
+
+			arr2[i]=document.getElementById(arr1[i]).value;
+			arr2[i]=arr2[i].replace("[","");
+			arr2[i]=arr2[i].replace("]","");
+			arr2[i]=arr2[i].split(",");
+		}
+		for(var i=0;i<4;i++)
+		{
+			var sum="";
+			var sum2=0;
+			for(var j=0;j<4;j++)
+			{
+				var sum1=parseInt(receivdedata[j])*parseInt(arr2[i][j]);
+				if(sum1>0)
+				{
+				sum=sum+"("+sum1+")"+"+"		
+				}
+				else
+				{
+					sum=sum+"("+sum1+")"+"+"
+				}
+			
+				sum2=parseInt(sum2)+parseInt(sum1)
+			}
+			sum=sum+"]"
+			sum=sum.replace("+]","=")
+			sum=sum+" "+sum2;
+			document.getElementById(arr3[i]).value=sum;
+			document.getElementById(arr3[i]).disabled=true;
+		
+		}
+
+		var receivdedata=new Array();
+		for(var i=0;i<4;i++)
+		{
+			receivdedata[i]=document.getElementById(arr3[i]).value;
+			receivdedata[i]=receivdedata[i].replace("[","");
+			receivdedata[i]=receivdedata[i].replace("]","");
+			for(var j=0;j<4;j++)
+			{
+			receivdedata[i]=receivdedata[i].replace("(","");
+			receivdedata[i]=receivdedata[i].replace(")","");
+			}
+			
+			receivdedata[i]=receivdedata[i].split("+");
+		}
+
+		
+
+		var graphname=['user5','user6','user7','user8'];
+		for(var i=0;i<4;i++){		
+		var chart = new CanvasJS.Chart(graphname[i], {
+  			animationEnabled: true,
+  			backgroundColor: "",
+  			axisX:{ 
+    			title: "Time",
+  			},
+  			axisY:{ 
+  			  title: "Amplitude",
+  			},
+  			data: [{
+  			  	type: "stepLine",
+     			markerSize:5,
+    			dataPoints: [
+      				{ x: 1, y: parseInt(receivdedata[i][0])},
+      				{ x: 2, y: parseInt(receivdedata[i][1]) },
+      				{ x: 3, y: parseInt(receivdedata[i][2]) },
+      				{ x: 5, y: parseInt(receivdedata[i][3]) }
+         	 ]
+  			}]
+		});
+	chart.render();
+	}	
+	}, 1500*1);
+
+
+	}
+
+	function reciveddata(){
+		arr1=['data5','data6','data7','data8'];
+		arr2=['num5','num6','num7','num8']
+		for(var i=0;i<4;i++)
+		{
+
+			var data=document.getElementById(arr1[i]).value;
+			data=data.split("=")
+			document.getElementById(arr2[i]).value=data[1]/4;
+			document.getElementById(arr2[i]).disabled=true;
+		}
+
+
+
+
+	}
+
+
+	function xyz(){
+
+		senderside()
+   setTimeout(function() {
+        channelData()
+        setTimeout(function() {
+          receiverside()
+            setTimeout(function() {
+              reciveddata()
+              setTimeout(function() {
+                location.reload();
+              },1000*5);
+            }, 1000*4);
+        }, 1000*4);
+    }, 1500*2);
+
+
+
+  	
+}
+
+function myMove(num,num1,num2,num3,num4,num5) {
+
+  var array=['animate1','animate2','animate3','animate4'];
+  var elem = document.getElementById(array[parseInt(num5)]);   
+  var pos = parseInt(num);
+  var pos1=parseInt(num1);
+  var id = setInterval(frame, 10);
+  
+  function frame() {
+    if (pos == parseInt(num2) || pos1==parseInt(num3)) {
+      clearInterval(id);
+    } else {
+      pos++;
+      pos1=pos1+parseFloat(num4);
+      elem.style.top = pos1 + "px"; 
+      elem.style.left =pos + "px"; 
+    }
+    
+
+  }
+
+
+  
+}
+	function myMove1(num,num1,num2) {
+
+  var elem1 = document.getElementById('animate1');
+  var elem2 = document.getElementById('animate2');
+  var elem3 = document.getElementById('animate3');   
+  var elem4 = document.getElementById('animate4');
+  var pos = parseInt(num);
+
+  var id = setInterval(frame, 10);
+  function frame() {
+    
+    if (pos == parseInt(num2) ) {
+      clearInterval(id);
+    } else {
+      pos++;
+      /*elem1.top=parseInt(num1)+"px";
+      elem2.top=parseInt(num2)+"px";
+      elem3.top=parseInt(num3)+"px";
+      elem4.top=parseInt(num4)+"px";*/
+
+      elem1.style.left =pos + "px"; 
+      elem2.style.left =pos + "px"; 
+      elem3.style.left =pos + "px"; 
+      elem4.style.left =pos + "px"; 
+    }
+    
+  }
+ 
+ 
+}
+
+
+
+	function myMove2(num,num1,num2,num3,num4,num5) {
+
+  var array=['animate1','animate2','animate3','animate4'];
+  var elem = document.getElementById(array[parseInt(num5)]);   
+  var pos = parseInt(num);
+  var pos1=parseInt(num1);
+  var id = setInterval(frame, 10);
+  function frame() {
+    if (pos == parseInt(num2) || pos1==parseInt(num3)) {
+      clearInterval(id);
+    } else {
+      pos++;
+      pos1=pos1+parseFloat(num4);
+      elem.style.top = pos1 + "px"; 
+      elem.style.left =pos + "px"; 
+  	  }
+
+  	}
+  
+	}
+
+
+
+	</script>
+</head>
+<body id="background" onload="codegenerator()">
+	<h1 id="headstyle">CODE DIVISION MULTIPLE ACCESS</h1>
+	<div style="padding: 10px">
+   <div id="col">
+      <div >
+      	
+        <b style="color: blue; font-size: 25px">User 1</b><input type="radio" name="gender1" id="num1" value="-1">-1
+        <input type="radio" name="gender1" id="num1" value="0" checked="checked">0
+        <input type="radio" name="gender1" id="num1" value="+1">+1
+        <br><br>
+        <b style="color: blue; font-size: 20px">Code</b> <input type="text" name="code1"  size="8" id="code_1" style="font-size: 18px;" >
+        
+
+      </div>
+      <br><br><br>
+      <div >
+      
+        <b style="color: blue; font-size: 25px">User 2</b> <input type="radio" name="gender2" id="num2" value="-1" >-1
+        <input type="radio" name="gender2" id="num2" value="0" checked="checked">0
+        <input type="radio" name="gender2" id="num2" value="1" >+1
+        <br><br>
+        <b style="color: blue; font-size: 20px">Code </b><input  type="text" name="code2" size="8" id="code_2" style="font-size: 18px;">  
+
+
+      </div>
+      <br><br><br>
+      <div >
+      
+        <b style="color: blue; font-size: 25px"> User 3</b> <input type="radio" name="gender3" id="num3" value="-1">-1
+        <input type="radio"  name="gender3" id="num3" value="0" checked="checked">0
+        <input type="radio" name="gender3" id="num3" value="+1" >+1
+         <br><br>
+        <b style="color: blue; font-size: 25px"> Code </b><input type="text" name="code3"  size="8" id="code_3" style="font-size: 18px;">
+         
+         
+      </div>
+      <br><br><br><br>
+      <div >
+      
+        <b style="color: blue; font-size: 25px"> User 4 </b><input type="radio" name="gender4" id="num4" value="-1" >-1
+        <input type="radio" name="gender4" id="num4" value="0" checked="checked">0
+        <input type="radio" name="gender4" id="num4" value="+1" >+1
+         <br><br>
+         <b style="color: blue; font-size: 25px"> Code </b><input type="text" name="code4"  size="8" id="code_4" style="font-size: 18px;">
+          
+         
+         
+
+      </div>
+   </div>
+
+   <div id="col1">
+      <div >
+        <input type="text" name="data1"  size="7" id="data1" style="font-size: 18px">
+        
+        <div id="user1" style="height: 106px; width: 200px;"></div>
+        
+      </div>
+      
+      <div >
+        <input type="text" name="data2"  size="7" id="data2" style="font-size: 18px">
+        <br>
+        <div id="user2" style="height: 106px; width: 200px;"></div>
+        <br>
+      </div>
+     
+
+      <div>
+       <input type="text" name="data3"  size="7" id="data3" style="font-size: 18px"> 
+       <br>
+       <div id="user3" style="height: 106px; width: 200px;"></div>  
+       <br>
+      </div>
+     
+      
+      <div>
+        <input type="text" name="data4"  size="7" id="data4" style="font-size: 18px">
+        <br>
+        <div id="user4" style="height: 106px; width: 200px;"></div>
+        <br>
+      </div>
+   </div>
+
+
+
+
+	<div id="col2">
+       <div id ="animate1" style="margin-top: 15px"></div>
+      <div id ="animate2" style="margin-top: 135px"></div>
+      <div id ="animate3" style="margin-top: 255px"></div>
+      <div id ="animate4" style="margin-top: 375px"></div>
+       <div style="padding-left: 150px;">
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+         <div id="channeldata" style="height: 100px; width: 200px;"></div>
+         <input type="text" name="data_5" id="data_5" size="15px" style="text-align: center; font-size: 20px">
+      </div>
+       <br><br><br>
+
+      <div style="text-align: center;">
+      <!--<input type="button" value="Next" onclick="clickCounter()" style="font-size: 20px; padding: 10px; padding-left: 40px; padding-right: 40px">
+         <input type="button" value="Run" onclick="xyz()" style="font-size: 20px; padding: 10px; padding-left: 40px; padding-right: 40px">
+      -->
+       <a class="animated-button1" onclick="clickCounter()" style="font-size: 20px; padding: 10px; padding-left: 40px; padding-right: 40px">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+         Next</a>
+         <a class="animated-button1" onclick="xyz()" style="font-size: 20px; padding: 10px; padding-left: 40px; padding-right: 40px">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+         Run</a>
+
+      </div>
+   </div>
+
+
+
+
+
+
+
+
+
+
+
+
+   <div id="col1">
+      <div >
+         <b style="color: blue; font-size: 25px"> Code </b><input type="text" name="code1"  size="8" id="code_5" style="font-size: 20px;">
+ 
+         <br><br><br>
+         <input type="text" name="data5"  size="15" id="data5" style="font-size: 18px">
+         
+      </div>
+      <br><br><br>
+      <div >
+      
+        
+        <b style="color: blue; font-size: 25px"> Code </b><input type="text" name="code2"  size="8" id="code_6" style="font-size: 20px;">
+        <br><br><br>
+        <input type="text" name="data6"  size="15" id="data6" style="font-size: 18px">
+         
+      </div>
+      <br><br><br>
+      <div >
+      
+       
+       <b style="color: blue; font-size: 25px"> Code </b><input type="text" name="code3"  size="8" id="code_7" style="font-size: 20px;">
+       <br><br><br>
+       <input type="text" name="data7"  size="15" id="data7" style="font-size: 18px">
+         
+      </div>
+      <br><br><br>
+      <div >
+      
+
+        <b style="color: blue; font-size: 25px"> Code </b><input type="text" name="code4"  size="8" id="code_8" style="font-size: 20px;">
+        <br><br><br>
+        <input type="text" name="data8"  size="15" id="data8" style="font-size: 18px">
+
+
+      </div>
+   </div>
+
+
+   <div id="col">
+      <div >
+      	<br>
+         Recived Data<input type="text" name="num1"  size="1" id="num5" style="font-size: 18px">   
+         <div id="user5" style="height: 106px; width: 200px;"></div>
+
+      </div>
+      <div >
+      
+         Recived Data<input type="text" name="num2" size="1" id="num6" style="font-size: 18px">
+          
+         <div id="user6" style="height: 106px; width: 200px;"></div>
+      </div>
+      <div >
+      
+         Recived Data<input type="text" name="num3"  size="1" id="num7" style="font-size: 18px">
+         
+         <div id="user7" style="height: 106px; width: 200px;"></div>
+      </div>
+      <div >
+      
+         Recived Data<input type="text" name="num4"  size="1" id="num8" style="font-size: 18px">
+          
+         <div id="user8" style="height: 106px; width: 200px;"></div>
+         
+
+      </div>
+   </div>
+
+
+
+   <div id="result"></div>
+
+   
+
+
+</body>
+</html>

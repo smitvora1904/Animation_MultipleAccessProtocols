@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ALOHA</title>
+    <script type="text/javascript">
+    //ellipses  ellipse
+    //lines  line
+    //rect  Rectangle 
+    //rect2 rectangle 2 lines
+
+    function load()
+        {
+            localStorage.clickcount=0;
+        var c = document.getElementById("GFG");
+        var ctx = c.getContext("2d");
+
+
+
+        ctx.beginPath();
+        ctx.fillStyle = "lightblue";
+        ctx.strokeStyle='lightblue';
+        ctx.lineWidth = 4;
+        ctx.rect(0,0, 1536, 700);
+        ctx.stroke();
+        ctx.fill();
+        ctx.beginPath();
+        ctx.fillStyle = "yellow";
+        ctx.fillText("aa",900,200);
+        ctx.fill();
+
+        ctx.beginPath(); 
+        ctx.moveTo(800,0); 
+        ctx.strokeStyle = 'darkgreen'; 
+        ctx.lineWidth=7;
+        ctx.lineTo(800,700); 
+        ctx.stroke();
+
+        ctx.beginPath(); 
+        ctx.moveTo(800,270); 
+        ctx.strokeStyle = 'darkgreen'; 
+        ctx.lineWidth=7;
+        ctx.lineTo(1535,270); 
+        ctx.stroke();
+
+
+        ctx.beginPath();
+        ctx.fillStyle = "blue";
+        ctx.strokeStyle='blue';
+        ctx.font = "15px Arial";
+        ctx.lineWidth = 4;
+        ctx.rect(820,10, 700, 240);
+        ctx.stroke();
+        ctx.fill();
+        ctx.beginPath();
+        ctx.fillStyle = "yellow";
+        ctx.fillText("K: Number of attempts",830,30);
+        ctx.fillText("Tp : Maximum propagation time",830,50);
+        ctx.fillText("TB : Back-off time",830,70);
+        ctx.fillText("The time-out period is equal to the maximum possible round-trip propagation delay,which is twice the ",830,95);
+        ctx.fillText("amount of time required to send a frame between the two most widelyseparated stations (2 x Tp)'. ",830,115);
+        ctx.fillText("The back-off time TB is a random value that normally depends on K. ",830,135);
+        ctx.fillText("The formula for TB depends on the implementation. One common formula is the binary exponential ",830,155);
+        ctx.fillText("back-off. In this method, for each retransmission, a multiplier in the range 0 to 2K - 1 is randomly chosen ",830,175);
+        ctx.fillText("and multiplied by Tp (maximum propagation time) or Trr (the average time required to send out a frame) ",830,195);
+        ctx.fillText("to find TB' Note that in this procedure, the range of the random numbers increases after each collision. ",830,215);
+        ctx.fillText("The value of Kmax is usually chosen as 15.",830,235);
+
+         ctx.fill();
+
+        ctx.font = "30px Arial";
+        ctx.fillStyle = "green"
+        ctx.fillText("Procedure for pure ALOHA protocol", 150, 27);
+
+        /*ctx.beginPath();
+        ctx.fillStyle = "blue";
+        ctx.strokeStyle='blue';
+        ctx.font = "15px Arial";
+        ctx.lineWidth = 4;
+        ctx.rect(810,280, 715, 380);
+        ctx.stroke();
+        ctx.fill();*/
+        }
+    function clr()
+    {
+            var canvas = document.getElementById("GFG");
+            ctx = canvas.getContext('2d');
+            ctx.clearRect(810,280, 715, 380);
+            ctx.beginPath();
+            ctx.fillStyle = "lightblue";
+            ctx.strokeStyle='lightblue';
+            ctx.rect(810,280, 715, 380);
+            ctx.stroke();
+            ctx.fill();
+    }
+    function sets(txx)
+    {
+            var canvas = document.getElementById("GFG");
+            ctx = canvas.getContext('2d');
+            ctx.font = "30px Arial";
+            ctx.fillStyle="green"
+            ctx.rect(810,280, 715, 380);
+            ctx.fillText(txx, 900, 450);
+    }
+    function seti(ix,iy,iname)
+    {
+            var doc_id = document.getElementById("GFG"); 
+            var context = doc_id.getContext("2d");
+            const img = new Image()
+            img.src = iname
+            img.onload = () => {
+            context.drawImage(img, ix,iy)
+        }
+    }
+    function clickCounter() 
+    {
+        if(typeof(Storage) !== "undefined") 
+        {
+            if (localStorage.clickcount) 
+            {
+                localStorage.clickcount = Number(localStorage.clickcount)+1;
+            }
+            else 
+            {
+                localStorage.clickcount = 1;
+            }
+          /*  document.getElementById("result").value = localStorage.clickcount ;
+        } 
+        else {
+                document.getElementById("result").value = 0;
+                }*/
+        
+        }
+        if(localStorage.clickcount==1)
+        {
+            //ellipses(x,y,txt,tx,ty)
+            clr()
+            ellipses(600, 80,"Start",575,85);
+            sets("Station has a frame to send")
+
+        }
+        else if(localStorage.clickcount==2)
+        {
+            clr()
+            //lines(x1,y1,x2,y2)
+            lines(600,110,600,135);
+            
+        }
+        else if(localStorage.clickcount==3)
+        {
+            clr()
+            //small rectangle
+            //rect(x,y,w,h,txt,tx,ty)
+            rect(560,135,80,50,"K=0",580,165);
+            sets("Set K=0 at initial stage");
+        }
+
+        else if(localStorage.clickcount==4)
+        {
+            clr()
+            //lines(x1,y1,x2,y2)
+            lines(600,185,600,230);
+        }
+        else if(localStorage.clickcount==5)
+        {
+            clr()
+            //big rectangle 1 line
+            //rect(x,y,w,h,txt,tx,ty)
+            rect(510,230,180,75,"Send the Frame",525,270);
+            //seti(900,425,"11.jpg");
+            sets("Sending a Frame");
+        }
+        else if(localStorage.clickcount==6)
+        {
+            clr()
+            //lines(x1,y1,x2,y2)
+            lines(600,305,600,330);
+        }
+        else if(localStorage.clickcount==7)
+        {
+            clr()
+            //big rectangle
+            //rect(x,y,w,h,txt1,txt2,tx1,ty1,tx2,ty2)
+            rect2(510,330,185,75,"Wait time-Qout time","(2*Tp)",516,365,560,390);
+            seti(900,300,"17.jpg")
+        }
+        else if(localStorage.clickcount==8)
+        {
+            clr()
+            //lines(x1,y1,x2,y2)
+            lines(600,405,600,430);
+        }
+        else if(localStorage.clickcount==9)
+        {
+            clr()
+            //rhombus(x1,y1,x2,y2,x3,y3,x4,y4,txt1,txt2,tx1,ty1,tx2,ty2)
+            rhombus(600,430,700,470,600,510,500,470,"ACK","Received?",575,460,560,480);
+            sets("Check either ACK Received or not?")
+
+        }
+        else if(localStorage.clickcount==10)
+        {
+            //clr()
+            //lines(x1,y1,x2,y2)
+            lines(600,510,600,545);
+            var canvas = document.getElementById("GFG");
+            ctx = canvas.getContext('2d');
+            ctx.font = "20px Arial";
+            ctx.fillText("Yes", 605, 530)
+        }
+        else if(localStorage.clickcount==11)
+        {
+            clr()
+            //ellipses(x,y,txt,tx,ty)
+            ellipses(600,575,"Success",560,580);
+            sets("Frame Successfully sent")
+
+        }
+        else if(localStorage.clickcount==12)
+        {
+            
+            var canvas = document.getElementById("GFG");
+            ctx = canvas.getContext('2d');
+            ctx.font = "20px Arial";
+            ctx.fillText("No", 475, 465)
+            //lines(x1,y1,x2,y2)
+            lines(500,470,465,470);
+        }
+        else if(localStorage.clickcount==13)
+        {
+            clr()
+            //small rectangle
+            //rect(x,y,w,h,txt,tx,ty)
+            rect(385,445,80,50,"K=K+1",395,475);
+            sets("K increases by 1")
+        }
+        else if(localStorage.clickcount==14)
+        {
+            clr()
+            //lines(x1,y1,x2,y2)
+            lines(360,470,385,470);
+
+        }
+        else if(localStorage.clickcount==15)
+        {
+            clr()
+            //rhombus(x1,y1,x2,y2,x3,y3,x4,y4,txt1,txt2,tx1,ty1,tx2,ty2)
+            rhombus(260,430,360,470,260,510,160,470,"K>Kmax?"," ",225,470,220,480);
+            sets("Checks K value, Kmax is normally 15")
+
+        }
+        else if(localStorage.clickcount==16)
+        {
+            //clr()
+            //lines(x1,y1,x2,y2)
+            lines(260,510,260,545);
+            var canvas = document.getElementById("GFG");
+            ctx = canvas.getContext('2d');
+            ctx.font = "20px Arial";
+            ctx.fillText("Yes", 265, 535)
+        }
+        else if(localStorage.clickcount==17)
+        {
+            clr()
+            //ellipses(x,y,txt,tx,ty)
+            ellipses(260,575,"Abort",240,580);
+            sets("Kmax reached so Frame is aborted")
+
+        }
+        else if(localStorage.clickcount==18)
+        {
+            //clr()
+            //lines(x1,y1,x2,y2)
+            lines(260,430,260,405);
+            var canvas = document.getElementById("GFG");
+            ctx = canvas.getContext('2d');
+            ctx.font = "20px Arial";
+            ctx.fillText("No", 265, 425)
+        }
+        else if(localStorage.clickcount==19)
+        {
+            clr()
+            //big rectangle
+            //rect(x,y,w,h,txt1,txt2,tx1,ty1,tx2,ty2)
+            rect2(165,330,185,75,"Choose a Random","Number R between",170,350,170,375);
+            var canvas = document.getElementById("GFG");
+            ctx = canvas.getContext('2d');
+            ctx.font = "20px Arial";
+            ctx.fillText("0 to (2^k)-1", 185, 400)
+            sets("Probability of Data Transmission ")
+            ctx.font = "30px Arial";
+            ctx.fillStyle="green"
+            ctx.fillText("is more as K increases", 900, 475);
+        }
+        else if(localStorage.clickcount==20)
+        {
+            clr()
+            //lines(x1,y1,x2,y2)
+            lines(260,330,260,305);
+        }
+        else if(localStorage.clickcount==21)
+        {
+            clr()
+            var canvas = document.getElementById("GFG");
+            ctx = canvas.getContext('2d');
+            //big rectangle 1 line
+            //rect(x,y,w,h,txt,tx,ty)
+            rect(165,230,180,75,"Wait Tb time",185,275);
+            ctx.font = "25px Arial";
+            ctx.fillStyle="green"
+            ctx.rect(810,280, 715, 380);
+            ctx.fillText("If the channel is not clear, the node waits for a randomly", 875, 390);
+            ctx.fillText("chosen period of time, and then checks again to see if the", 875, 420);
+            ctx.fillText("channel is clear. This period of time is called the backoff ", 875, 450);
+            ctx.fillText("period, and is counted down by a backoff counter.", 875, 480);
+           /* If the channel is not clear, the node waits for a randomly chosen period of time, and then checks again to see if the channel is clear. This period of time is called the backoff period, and is counted down by a backoff counter.*/
+        }
+        else if(localStorage.clickcount==22)
+        {
+            clr()
+            lines(260,230,260,205);
+            lines(260,205,600,205);
+            sets("And gets Repeated")
+
+        }
+
+        else if(localStorage.clickcount==23)
+        {
+            clr()
+            var canvas = document.getElementById("GFG");
+            ctx = canvas.getContext('2d');
+            ctx.clearRect(0,35, 750, 650);
+            ctx.beginPath();
+            ctx.fillStyle = "lightblue";
+            ctx.strokeStyle='lightblue';
+            ctx.rect(0,35, 750, 650);
+            ctx.stroke();
+            ctx.fill();
+                        localStorage.clickcount=0;
+
+            //change() 
+            //abc()
+        }
+
+    }
+
+    function abc(){
+
+        var doc_id = document.getElementById("GFG"); 
+        var context = doc_id.getContext("2d"); 
+        const img = new Image()
+        img.src = "b.gif"
+        img.onload = () => {
+        context.drawImage(img, 600,0)
+    } 
+    }
+    function lines(x1,y1,x2,y2){
+        var doc_id = document.getElementById("GFG"); 
+        var context = doc_id.getContext("2d"); 
+        context.beginPath(); 
+        context.moveTo(x1,y1); 
+        context.strokeStyle = 'green'; 
+        context.lineTo(x2,y2); 
+        context.stroke(); 
+
+    }
+
+    function ellipses(x,y,txt,tx,ty)
+    {
+        var canvas = document.getElementById("GFG");
+        ctx = canvas.getContext('2d');
+
+        
+        ctx.beginPath();
+        ctx.fillStyle = "yellow";
+        ctx.strokeStyle='black';
+        ctx.font = "20px Arial";
+        ctx.lineWidth = 4;
+        ctx.ellipse(x,y, 30,50, Math.PI/2, 0, 2 * Math.PI);
+        ctx.stroke();
+        ctx.fill();
+        ctx.beginPath();
+        ctx.fillStyle = "black";
+        ctx.fillText(txt,tx,ty);
+        ctx.fill();
+    }
+    function change()
+    {
+        var canvas = document.getElementById("GFG");
+        ctx = canvas.getContext('2d');
+        ctx.font = "30px Arial";
+        ctx.fillText("Hello World", 10, 50);
+    }
+    function rect(x,y,w,h,txt,tx,ty)
+    {
+        var c = document.getElementById("GFG");
+        var ctx = c.getContext("2d");
+        ctx.beginPath();
+        ctx.fillStyle = "orange";
+        ctx.strokeStyle='black';
+        ctx.font = "20px Arial";
+        ctx.lineWidth = 4;
+        ctx.rect(x,y, w, h);
+        ctx.stroke();
+        ctx.fill();
+        ctx.beginPath();
+        ctx.fillStyle = "black";
+        ctx.fillText(txt,tx,ty);
+        ctx.fill();
+    }
+    function rect2(x,y,w,h,txt1,txt2,tx1,ty1,tx2,ty2)
+    {
+        var c = document.getElementById("GFG");
+        var ctx = c.getContext("2d");
+        ctx.beginPath();
+        ctx.fillStyle = "orange";
+        ctx.strokeStyle='black';
+        ctx.font = "20px Arial";
+        ctx.lineWidth = 4;
+        ctx.rect(x,y, w, h);
+        ctx.stroke();
+        ctx.fill();
+        ctx.beginPath();
+        ctx.fillStyle = "black";
+        ctx.fillText(txt1,tx1,ty1);
+        ctx.fillText(txt2,tx2,ty2);
+        ctx.fill();
+    }
+    function rhombus(x1,y1,x2,y2,x3,y3,x4,y4,txt1,txt2,tx1,ty1,tx2,ty2)
+    {
+        var c = document.getElementById("GFG");
+        var ctx = c.getContext('2d');
+        ctx.beginPath();
+        ctx.fillStyle = '#51FF0D';
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2,y2);
+        ctx.lineTo(x3,y3);
+        ctx.lineTo(x4,y4);
+        ctx.closePath();
+        ctx.fill();
+        ctx.beginPath();
+        ctx.font = "20px Arial";
+        ctx.fillStyle = "black";
+        ctx.fillText(txt1,tx1,ty1);
+        ctx.fillText(txt2,tx2,ty2);
+        ctx.fill();
+    }
+    
+    </script>
+    
+</head>
+<body onload="load()">
+    <canvas id="GFG" width="1536" height="670"></canvas> 
+        <form style="background-color: lightblue">
+    <input type="button" name="start" value="Start/Next" onclick="clickCounter()" style="text-align: center;padding: 15px 32px;font-size: 16px;margin-left: 500px">
+  </form>
+
+</body>
+</html>

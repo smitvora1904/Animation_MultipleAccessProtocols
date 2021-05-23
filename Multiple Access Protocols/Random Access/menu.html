@@ -1,0 +1,91 @@
+
+<html>
+  <head>
+    <title>Main Page</title>
+    <link rel="stylesheet" type="text/css" href="buttoncss1.css">
+  <style>
+
+    #head{
+      padding-top: 50px;
+      text-align: center;
+      background: linear-gradient(to right, rgb(17,17,128), blue);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+      font-size: 40px;
+    }
+
+    #subhead{
+      text-align: center;
+      background: linear-gradient(to right, rgb(100,0,0),red );
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+      font-size: 30px;
+      float: left;
+      width: 100%;
+    }
+    #buttonhead{
+
+      float: left;
+      width: 100%;
+
+    }
+
+    body
+    {
+    text-align:center;
+    width:100%;
+    margin:0 auto;
+    padding:0px;
+    font-family:helvetica;
+    animation: back_animate 25s infinite linear;
+    }
+
+    @keyframes back_animate 
+    {
+      0%{background-color:#0B2161;}
+      10%{background-color:#BE81F7;}
+      20%{background-color:#170B3B;}
+      30%{background-color:#81F7D8;}
+      40%{background-color:#088A68;}
+      50%{background-color:#5882FA;}
+      60%{background-color:#424242;}
+      70%{background-color:#3B240B;} 
+      80% {background-color:#FF8000;}
+      90%{background-color:#ACFA58;}
+      100%{background-color:#298A08;}
+    }
+
+</style>
+</head>
+<body>
+      <h1 id="head">CSMA</h1>
+      
+
+      <div id="buttonhead">
+          <button onclick="window.location.href='1persistent.html'" class="animated-button1">
+           <span></span>
+            <span></span>
+            <span></span>
+            <span></span>1-persistent</button>
+          <br><br>
+          <button onclick="window.location.href='nonpersistent.html'" class="animated-button1">
+           <span></span>
+            <span></span>
+            <span></span>
+            <span></span>nonpersistent</button>
+          <br><br>
+          <button onclick="window.location.href='ppersistent.html'" class="animated-button1">
+           <span></span>
+            <span></span>
+            <span></span>
+            <span></span>p-persistent</button> 
+      </div>
+
+       
+
+</body>
+</html>
+
+
+
+

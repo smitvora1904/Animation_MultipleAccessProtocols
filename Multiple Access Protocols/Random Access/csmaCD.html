@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>CSMA/CD</title>
+	<style type="text/css">
+		.column {
+  	float: left;
+  	width: 16%;
+  	padding: 2px;
+	}
+
+	.row::after {
+  		content: "";
+  		clear: both;
+  		display: inline-block;
+  }
+
+  #animate1 {
+    width: 50px;
+    height: 10px;
+    position: absolute;
+    background-color: blue;
+    padding: 5px;
+	}
+
+  </style>
+
+	<script type="text/javascript">
+          var var111;
+    function zz()
+    {
+
+            const rbs1 = document.querySelectorAll('input[name="i1"]');
+            let selectedValue1;
+            for (const rb1 of rbs1) {
+                if (rb1.checked) {
+                    selectedValue1 = rb1.value;
+                    break;
+                }
+            }
+            var111=selectedValue1;
+    }
+/*
+num5 = not needed.
+num = startx.
+num1 = starty.
+num2 = endx.
+num3 = endy.
+num4 = alignment.
+*/
+
+    function load()
+    {
+        localStorage.clickcount=0;
+
+    }
+     function myMove(rectX,rectY,rectWidth,rectHeight,end,clearWidth,txt,color,pos2) {
+      //var elem = document.getElementById("animate1"); 
+      var doc_id = document.getElementById("verticle"); 
+      var ctx = doc_id.getContext("2d"); 
+      var count = 0; 
+      var speed;
+      if(var111==0)
+      {
+          speed=1000;
+      }
+      else if(var111==1)
+      {
+        speed=500;
+      }
+      else
+      {
+        speed=100;
+      }
+      //context.clearRect(10, 10, 30, 20);
+      var pos = parseInt(rectX);
+      var pos1=parseInt(rectY);
+      var id = setInterval(frame, speed);
+      function frame() {
+        if (pos >= parseInt(end) ) {
+          clearInterval(id);
+        } else {
+
+       // console.log("buffer: "+count*200);
+          ctx.clearRect(rectX-3, rectY-3, clearWidth ,rectHeight+7); 
+          ctx.beginPath();
+          ctx.lineWidth = 3;
+          ctx.moveTo(pos, rectY); 
+          ctx.strokeStyle = color;
+          ctx.rect(pos, rectY, rectWidth, rectHeight);
+          ctx.stroke();
+          ctx.font = "15px Arial";
+          ctx.fillText(txt,parseInt(pos-20 +(parseInt(rectWidth-7)/2)), parseInt(rectY+(parseInt(rectHeight+7)/2)));
+          //console.log("count: "+count);
+          if(pos==pos2)
+          {
+              color="red";
+              txt="!@#$%";
+          }
+          pos+=10;
+
+          count+=1;
+          //elem.style.top = pos1 + "px";
+          //elem.style.top = 0 + "px";
+          //elem.style.left =pos + "px";
+        }
+        //context.clearRect(num+2, pos1, pos+20, pos1);
+        
+      }
+    }
+
+    function myMoveRev(rectX,rectY,rectWidth,rectHeight,end,clearWidth,txt,color,pos2) {
+
+      //var elem = document.getElementById("animate1"); 
+      var doc_id = document.getElementById("verticle"); 
+      var ctx = doc_id.getContext("2d"); 
+      var count = 0; 
+      //context.clearRect(10, 10, 30, 20);
+            var speed;
+      if(var111==0)
+      {
+          speed=1000;
+      }
+      else if(var111==1)
+      {
+        speed=500;
+      }
+      else
+      {
+        speed=100;
+      }
+      var pos = parseInt(end);
+      var pos1=parseInt(rectY);
+      var id = setInterval(frame, speed);
+      function frame() {
+        if (pos <= parseInt(rectX) ) {
+          clearInterval(id);
+        } else {
+
+        //console.log("buffer: "+count*200);
+          ctx.clearRect(rectX-3, rectY-3, clearWidth ,rectHeight+7); 
+          ctx.beginPath();
+          ctx.lineWidth = 3;
+          ctx.moveTo(pos, rectY); 
+          ctx.strokeStyle = color;
+          ctx.rect(pos, rectY, rectWidth, rectHeight);
+          ctx.stroke();
+
+          ctx.font = "15px Arial";
+          ctx.fillText(txt,parseInt(pos-20 +(parseInt(rectWidth-7)/2)), parseInt(rectY+(parseInt(rectHeight+7)/2)));
+
+          //ctx.fillText(txt,parseInt(pos-7 +(parseInt(rectWidth-7)/2)), parseInt(rectY+(parseInt(rectHeight+7)/2)));
+          //console.log("count: "+count);
+          if(pos==pos2)
+          {
+              color="red";
+              txt="!@#$%";
+          }
+          pos-=10;
+          count+=1;
+          //elem.style.top = pos1 + "px";
+          //elem.style.top = 0 + "px";
+          //elem.style.left =pos + "px";
+        }
+        //context.clearRect(num+2, pos1, pos+20, pos1);
+        
+      }
+    }
+
+    function prime()
+    {
+      var doc_id = document.getElementById("verticle"); 
+          var context = doc_id.getContext("2d");
+
+        context.beginPath();
+        context.fillStyle = "orange";
+        context.strokeStyle='black';
+        context.font = "15px Arial";
+        context.lineWidth = 10;
+        context.rect(1130,10, 375, 200);
+        context.stroke();
+        context.fill();
+        context.fillStyle = "black";
+        context.font = "25px Arial";
+        context.fillText("Note:-", 1150, 40);
+        context.font = "20px Arial";
+        context.fillText("- Frame with RED colour are collided", 1150, 70);
+        context.fillText("  frame.", 1150, 90);
+        context.fillText("- Due to Collision the data is Corrupted.", 1150, 130);
+        context.fillText("- So data after Collision is like !@#$%.", 1150, 170);
+        
+          context.beginPath(); 
+          context.moveTo(200, 0); 
+          context.strokeStyle = 'darkgreen';
+          context.lineTo(200,240);
+          context.lineWidth = 5; 
+          context.stroke();
+
+          context.beginPath(); 
+          context.moveTo(750, 0); 
+          context.strokeStyle = 'darkgreen'; 
+          context.lineTo(750,240);
+          context.lineWidth = 5; 
+          context.stroke();
+
+          context.beginPath(); 
+          context.moveTo(200, 5); 
+          context.strokeStyle = 'darkgreen'; 
+          context.lineTo(750,5);
+          context.lineWidth = 5; 
+          context.stroke();
+
+          context.beginPath(); 
+          context.moveTo(200, 60); 
+          context.strokeStyle = 'darkgreen'; 
+          context.lineTo(750,60);
+          context.lineWidth = 5; 
+          context.stroke();
+
+          context.beginPath(); 
+          context.moveTo(200, 120); 
+          context.strokeStyle = 'darkgreen'; 
+          context.lineTo(750,120);
+          context.lineWidth = 5; 
+          context.stroke();
+
+          context.beginPath(); 
+          context.moveTo(200, 180); 
+          context.strokeStyle = 'darkgreen'; 
+          context.lineTo(750,180);
+          context.lineWidth = 5; 
+          context.stroke();
+
+          context.beginPath(); 
+          context.moveTo(200, 240); 
+          context.strokeStyle = 'darkgreen'; 
+          context.lineTo(750,240);
+          context.lineWidth = 5; 
+          context.stroke();
+
+          context.beginPath();
+          context.fillStyle = "green";
+          context.strokeStyle='black';
+          context.lineWidth = 4;
+          context.rect(880,60, 220, 100);
+          context.stroke();
+
+          context.font = "25px Arial";
+          context.fillText("Data Frame of A", 10, 40);
+          //context.fillText("A", 760, 40);
+          context.fillText("Data Frame of B", 10, 100);
+          //context.fillText("B", 760, 100);
+          context.fillText("Data Frame of C", 10, 160);
+          //context.fillText("C", 760, 160);
+          context.fillText("Data Frame of D", 10, 220);
+          //context.fillText("D", 760, 220);
+
+          /*context.beginPath();
+          context.fillStyle = "green";
+          context.strokeStyle='black';
+          context.lineWidth = 4;
+          context.rect(1130,10, 375, 250);
+
+          context.stroke();*/
+
+
+          //context.fill();
+    }
+
+
+    function p(x,y)
+    {
+              var doc_id = document.getElementById("verticle"); 
+              var ctx = doc_id.getContext("2d");
+              ctx.beginPath();
+              ctx.fillStyle = "black";
+              ctx.rect(x,y, 5, 5);
+              ctx.stroke();
+              ctx.fill();
+    }
+    function r()
+    {
+              var doc_id = document.getElementById("verticle"); 
+              var c = doc_id.getContext("2d");
+              c.clearRect(0,0,verticle.width,verticle.height);
+              localStorage.clickcount=0;
+              varb1=0;
+              varb2=0;
+              varb3=0;
+              varb4=0;
+    }
+    function starprocess()
+    {
+      var chk1 = document.getElementById("s1");
+      var chk2 = document.getElementById("s2");
+      var chk3 = document.getElementById("s3");
+      var chk4 = document.getElementById("s4");
+      if(chk1.checked==true)
+      {
+        varb1=1;
+      }
+      else
+      {
+        varb1=0;
+      }
+      if(chk2.checked==true)
+      {
+        varb2=1;
+      }
+      else
+      {
+        varb2=0;
+      }
+      if(chk3.checked==true)
+      {
+        varb3=1;
+      }
+      else
+      {
+        varb3=0;
+      }
+      if(chk4.checked==true)
+      {
+        varb4=1;
+      }
+      else
+      {
+        varb4=0;
+      }
+      var delay = 2000;
+      var buffer = 0;
+      if(typeof(Storage) !== "undefined") 
+        {
+            if (localStorage.clickcount) 
+            {
+                localStorage.clickcount = Number(localStorage.clickcount)+1;
+            }
+            else 
+            {
+                localStorage.clickcount = 1;
+            }
+          /*  document.getElementById("result").value = localStorage.clickcount ;
+        } 
+        else {
+                document.getElementById("result").value = 0;
+                }*/
+            
+        }
+
+
+          
+
+
+
+          prime()
+          var doc_id = document.getElementById("verticle"); 
+          var c = doc_id.getContext("2d");
+
+
+          if(localStorage.clickcount==1)
+          {
+              if(varb1==1 && varb2==1 && varb3==1 && varb4==1)
+              {
+              myMove(210,20,60,25,690,540,"Data A","white",240);//A and B
+              myMoveRev(205,80,60,25,340,200,"Data B","yellow",310);//B and A
+              myMove(410,80,60,25,690,340,"Data B","yellow",430);//B and C
+              myMoveRev(205,140,60,25,530,390,"Data C","orange",510);//C and B
+              myMove(590,140,60,25,690,150,"Data C","orange",600);//C and D
+              myMoveRev(205,200,60,25,680,540,"Data D","black",670);//D and C
+                c.font = "20px Arial";
+                c.fillText("Collision Detection of", 900, 100);
+                c.fillText("A, B, C, D", 900, 140);
+
+              }
+              else if(varb1==1 && varb2==1 && varb3==1)
+              {
+              myMove(210,20,60,25,690,540,"Data A","white",240);//A and B
+              myMoveRev(205,80,60,25,340,200,"Data B","yellow",310);//B and A
+              myMove(410,80,60,25,690,340,"Data B","yellow",430);//B and C
+              myMove(590,140,60,25,690,150,"Data C","orange",1000);//C
+              myMoveRev(205,140,60,25,530,390,"Data C","orange",510);//C and B
+                c.font = "20px Arial";
+                c.fillText("Collision Detection of", 900, 100);
+                c.fillText("A, B, C", 900, 140);
+
+              }
+              else if(varb1==1 && varb2==1 && varb4==1)
+              {
+
+              myMove(210,20,60,25,690,540,"Data A","white",240);//A and B
+              myMoveRev(205,80,60,25,340,200,"Data B","yellow",310);//B and A
+              myMove(410,80,60,25,690,340,"Data B","yellow",500);//B and D
+              myMoveRev(205,200,60,25,680,540,"Data D","black",590);//D and B
+                c.font = "20px Arial";
+                c.fillText("Collision Detection of", 900, 100);
+                c.fillText("A, B, D", 900, 140);
+
+              }
+              else if(varb1==1 && varb3==1 && varb4==1)
+              {
+
+              myMove(210,20,60,25,690,540,"Data A","white",320);//A and C
+              myMoveRev(205,140,60,25,530,390,"Data C","orange",420);//C and A
+              myMove(590,140,60,25,690,150,"Data C","orange",600);//C and D
+              myMoveRev(205,200,60,25,680,540,"Data D","black",670);//D and C
+                c.font = "20px Arial";
+                c.fillText("Collision Detection of", 900, 100);
+                c.fillText("A, C, D", 900, 140);
+
+              }
+              else if(varb2==1 && varb3==1 && varb4==1)
+              {
+              myMoveRev(205,80,60,25,340,200,"Data B","yellow",0);//B
+              myMove(410,80,60,25,690,340,"Data B","yellow",430);//B and C
+              myMoveRev(205,140,60,25,530,390,"Data C","orange",510);//C and B
+              myMove(590,140,60,25,690,150,"Data C","orange",600);//C and D
+              myMoveRev(205,200,60,25,680,540,"Data D","black",670);//D and C
+                c.font = "20px Arial";
+                c.fillText("Collision Detection of", 900, 100);
+                c.fillText("B, C, D", 900, 140);
+
+              }
+              else if(varb1==1 && varb2==1)
+              {
+              myMove(210,20,60,25,690,540,"Data A","white",240);//A and B
+              myMove(410,80,60,25,690,340,"Data B","yellow",1000);//B
+              myMoveRev(205,80,60,25,340,200,"Data B","yellow",310);//B and A
+                c.font = "20px Arial";
+                c.fillText("Collision Detection of", 900, 100);
+                c.fillText("A, B", 900, 140);
+
+              }
+              else if(varb1==1 && varb3==1)
+              {
+              myMove(210,20,60,25,690,540,"Data A","white",320);//A and C
+              myMove(590,140,60,25,690,150,"Data C","orange",1000);//C
+              myMoveRev(205,140,60,25,530,390,"Data C","orange",420);//C and A
+                c.font = "20px Arial";
+                c.fillText("Collision Detection of", 900, 100);
+                c.fillText("A, C", 900, 140);
+
+              }
+              else if(varb1==1 && varb4==1)
+              {
+              myMove(210,20,60,25,690,540,"Data A","white",400);//A amd D
+              myMoveRev(205,200,60,25,680,540,"Data D","black",490);//D and A
+                c.font = "20px Arial";
+                c.fillText("Collision Detection of", 900, 100);
+                c.fillText("A, D", 900, 140);
+
+              }
+              else if(varb2==1 && varb3==1)
+              {
+              myMove(410,80,60,25,690,340,"Data B","yellow",430);//B and C
+              myMoveRev(205,80,60,25,340,200,"Data B","yellow",0);//B
+              myMove(590,140,60,25,690,150,"Data C","orange",1000);//C
+              myMoveRev(205,140,60,25,530,390,"Data C","orange",510);//C and B
+                c.font = "20px Arial";
+                c.fillText("Collision Detection of", 900, 100);
+                c.fillText("B, C", 900, 140);
+
+              }
+              else if(varb2==1 && varb4==1)
+              {
+              myMove(410,80,60,25,690,340,"Data B","yellow",500);//B and D
+              myMoveRev(205,80,60,25,340,200,"Data B","yellow",0);//B
+              myMoveRev(205,200,60,25,680,540,"Data D","black",590);//D and B
+                c.font = "20px Arial";
+                c.fillText("Collision Detection of", 900, 100);
+                c.fillText("B, D", 900, 140);
+
+              }
+              else if(varb3==1 && varb4==1)
+              {
+              myMove(590,140,60,25,690,150,"Data C","orange",600);//C and D
+              myMoveRev(205,140,60,25,530,390,"Data C","orange",0);//C
+              myMoveRev(205,200,60,25,680,540,"Data D","black",670);//D and C
+              c.font = "20px Arial";
+              c.fillText("Collision Detection of", 900, 100);
+                c.fillText("C, D", 900, 140);
+
+              }
+
+
+
+
+              else if(varb1==1)
+              {
+                myMove(210,20,60,25,690,540,"Data A","white",1000);//A
+                c.font = "20px Arial";
+                c.fillText("Collision Detection of", 900, 100);
+                c.fillText("A", 900, 140);
+
+              }
+              else if(varb2==1)
+              {
+                myMove(410,80,60,25,690,340,"Data B","yellow",1000);//B
+                myMoveRev(205,80,60,25,340,200,"Data B","yellow",0);//B
+                c.font = "20px Arial";
+                c.fillText("Collision Detection of", 900, 100);
+                c.fillText("B", 900, 140);
+
+              }
+              else if(varb3==1)
+              {
+                myMove(590,140,60,25,690,150,"Data C","orange",1000);//C
+                  myMoveRev(205,140,60,25,530,390,"Data C","orange",0);//C
+                
+                c.font = "20px Arial";
+                c.fillText("Collision Detection of", 900, 100);
+                c.fillText("C", 900, 140);
+
+              }
+              else if(varb4==1)
+              {
+
+                myMoveRev(205,200,60,25,680,540,"Data D","black",0);//D
+                c.font = "20px Arial";
+                c.fillText("Collision Detection of", 900, 100);
+                c.fillText("D", 900, 140);
+
+              }
+
+          }
+          else if(localStorage.clickcount==2)
+          {
+            r();
+             // setTimeout(function(){r(); }, 15000); 
+             localStorage.clickcount=0; 
+          }
+
+
+
+        
+
+
+    }
+
+
+
+
+
+	</script>
+
+</head>
+<body style="background-color: skyblue;" onload="load()">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <header style="padding: 1px; text-align: center;font-family: monospace; font-size: 32px; background-color: rgb(0,255,0); ">Collision of the first bit in CSMA/CD</header>
+  <table style="text-align: left;">
+    <tr>
+      <th colspan="6" rowspan="1">
+        <div style="background: blue; color: white; width: 1000px">
+        <p></p>
+        </div>
+      </th>
+    </tr>
+
+
+    <tr>
+      <td>
+      <div class="row">
+  <div class="column">
+    <p style="font-size: 20px;">            </p>
+  </div>
+  <div class="column" >
+    <form>
+      <p style="font-size: 20px;">A:<input type="checkbox" id="s1" name="s1" value="System-1" style="height: 20px; width: 20px;">
+        </p>
+    </form>
+  </div>
+  <div class="column">
+    <form>
+      <p style="font-size: 20px;">B:<input type="checkbox" id="s2" name="s2" value="System-2" style="height: 20px; width: 20px;">
+      </p>
+    </form>
+  </div>
+  <div class="column">
+    <form>
+      <p style="font-size: 20px;">C:<input type="checkbox" id="s3" name="s3" value="System-3" style="height: 20px; width: 20px;">
+      </p>
+    </form>
+  </div>
+  <div class="column">
+    <form>
+      <p style="font-size: 20px;">D:<input type="checkbox" id="s4" name="s4" value="System-4" style="height: 20px; width: 20px;">
+      </p>
+    </form>
+  </div>
+</div>
+  </td>
+    </tr>
+
+    <tr>
+      <td>
+       <div class="row">
+  <div class="column">
+    <!--<img src="primary.png" alt="Primary" style="width:50%">-->
+  </div>
+  <div class="column">
+    <img src="secondary.png" alt="Scondary" style="width:50%">
+  </div>
+  <div class="column">
+    <img src="secondary.png" alt="Secondary" style="width:50%">
+  </div>
+  <div class="column">
+    <img src="secondary.png" alt="Secondary" style="width:50%">
+  </div>
+  <div class="column">
+    <img src="secondary.png" alt="Secondary" style="width:50%">
+  </div>
+  <div>
+
+    <form>
+      <label style="margin-left: 50px;"><b>Select Speed</b></label><br>
+     <input type="radio" id="a1" name="i1" value="0" style="margin-left: 50px;">
+     <label for="a1">0.5x</label><br>
+     <input type="radio" id="a2" name="i1" value="1" style="margin-left: 50px;" checked> 
+     <label for="a2">1x</label><br>
+     <input type="radio" id="a3" name="i1" value="2" style="margin-left: 50px;"> 
+     <label for="a3">2x</label>
+    <!-- <input type="button" id="btn1" name="OK" value="OK" onclick="as()"><br>
+    <input type="button" name="start" value="0.5X" onclick="starprocess()" style="text-align: center;padding: 5px 10px;font-size: 10px; width: 50px">
+    <input type="button" name="start" value="1X" onclick="starprocess()" style="text-align: center;padding: 5px 10px;font-size: 10px; width: 50px">
+    <input type="button" name="start" value="2X" onclick="starprocess()" style="text-align: center;padding: 5px 10px;font-size: 10px; width: 50px">-->
+      <script type="text/javascript">
+
+    </script>
+  </form>
+  </div>
+</div>
+</td>
+    </tr>
+  </table>
+
+  <canvas id = "horizontal" width="1400" height="50">
+  </canvas>
+  <script type="text/javascript">
+  var horiz_id = document.getElementById("horizontal"); 
+    var ctx = horiz_id.getContext("2d"); 
+    ctx.beginPath(); 
+    ctx.moveTo(0,40); 
+    ctx.strokeStyle = 'black';
+    ctx.lineWidth = 5; 
+    ctx.lineTo(800,40); 
+    ctx.stroke();
+
+    /*ctx.moveTo(40,0);
+    ctx.lineTo(40,40); 
+    ctx.stroke();*/
+
+    ctx.moveTo(200,0);
+    ctx.lineTo(200,40); 
+    ctx.stroke();
+
+    ctx.moveTo(400,0);
+    ctx.lineTo(400,40); 
+    ctx.stroke();
+
+    ctx.moveTo(580,0);
+    ctx.lineTo(580,40); 
+    ctx.stroke();
+
+    ctx.moveTo(750,0);
+    ctx.lineTo(750,40); 
+    ctx.stroke();
+  </script>
+	<canvas id="verticle" width="1530" height="300"> 
+    </canvas> <br><br>
+       <input type="button" name="start" value="Start/Next" onclick="zz();starprocess();" style="text-align: center;padding: 15px 32px;font-size: 16px; margin-left: 400px">
+</body>
+</html>
